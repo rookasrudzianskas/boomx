@@ -6,11 +6,11 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/boomx/cog/pkg/config"
-	"github.com/boomx/cog/pkg/docker"
-	"github.com/boomx/cog/pkg/global"
-	"github.com/boomx/cog/pkg/image"
-	"github.com/boomx/cog/pkg/util/console"
+	"github.com/boomx/boomx/pkg/config"
+	"github.com/boomx/boomx/pkg/docker"
+	"github.com/boomx/boomx/pkg/global"
+	"github.com/boomx/boomx/pkg/image"
+	"github.com/boomx/boomx/pkg/util/console"
 )
 
 func newPushCommand() *cobra.Command {
@@ -18,7 +18,7 @@ func newPushCommand() *cobra.Command {
 		Use: "push [IMAGE]",
 
 		Short:   "Build and push model in current directory to a Docker registry",
-		Example: `cog push registry.hooli.corp/hotdog-detector`,
+		Example: `boomx push registry.hooli.corp/hotdog-detector`,
 		RunE:    push,
 		Args:    cobra.MaximumNArgs(1),
 	}
@@ -39,7 +39,7 @@ func push(cmd *cobra.Command, args []string) error {
 	}
 
 	if imageName == "" {
-		return fmt.Errorf("To push images, you must either set the 'image' option in cog.yaml or pass an image name as an argument. For example, 'cog push registry.hooli.corp/hotdog-detector'")
+		return fmt.Errorf("To push images, you must either set the 'image' option in boomx.yaml or pass an image name as an argument. For example, 'boomx push registry.hooli.corp/hotdog-detector'")
 	}
 
 	if err := image.Build(cfg, projectDir, imageName, buildProgressOutput); err != nil {

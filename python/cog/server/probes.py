@@ -10,7 +10,7 @@ PathLike = Union[Path, str, None]
 
 class ProbeHelper:
 
-    _root = Path("/var/run/cog")
+    _root = Path("/var/run/boomx")
     _enabled = False
 
     def __init__(self, root: PathLike = None):
@@ -25,8 +25,8 @@ class ProbeHelper:
             self._root.mkdir(exist_ok=True)
         except OSError:
             log.error(
-                f"Failed to create cog runtime state directory ({self._root}). "
-                "Does it already exist and is a file? Does the user running cog "
+                f"Failed to create boomx runtime state directory ({self._root}). "
+                "Does it already exist and is a file? Does the user running boomx "
                 "have permissions?"
             )
         else:

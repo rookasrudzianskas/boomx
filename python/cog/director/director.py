@@ -69,7 +69,7 @@ class Director:
         self._failure_count = 0
         self._should_exit = False
         self._shutdown_hooks: List[Callable] = []
-        self._tracer = trace.get_tracer("cog-director")
+        self._tracer = trace.get_tracer("boomx-director")
 
         self.cog_client = _make_local_http_client()
         self.cog_http_base = "http://localhost:5000"
@@ -181,7 +181,7 @@ class Director:
             try:
                 log.info("received message")
                 with self._tracer.start_as_current_span(
-                    name="cog.prediction",
+                    name="boomx.prediction",
                     attributes=span_attributes_from_env(),
                 ) as span:
                     self._handle_message(message_json, span)

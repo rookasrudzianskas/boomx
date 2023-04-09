@@ -54,7 +54,7 @@ def run_setup(predictor: BasePredictor) -> None:
     weights_url = os.environ.get("COG_WEIGHTS")
     weights_path = "weights"
 
-    # TODO: Cog{File,Path}.validate(...) methods accept either "real"
+    # TODO: BoomX{File,Path}.validate(...) methods accept either "real"
     # paths/files or URLs to those things. In future we can probably tidy this
     # up a little bit.
     if weights_url:
@@ -110,10 +110,10 @@ def run_prediction(
 # TODO: make config a TypedDict
 def load_config() -> Dict[str, Any]:
     """
-    Reads cog.yaml and returns it as a dict.
+    Reads boomx.yaml and returns it as a dict.
     """
     # Assumes the working directory is /src
-    config_path = os.path.abspath("cog.yaml")
+    config_path = os.path.abspath("boomx.yaml")
     try:
         with open(config_path) as fh:
             config = yaml.safe_load(fh)
@@ -139,7 +139,7 @@ def get_predictor_ref(config: Dict[str, Any], mode: str = "predict") -> str:
 
     if mode not in config:
         raise PredictorNotSet(
-            f"Can't run predictions: '{mode}' option not found in cog.yaml"
+            f"Can't run predictions: '{mode}' option not found in boomx.yaml"
         )
 
     return config[mode]
@@ -176,7 +176,7 @@ class BaseInput(BaseModel):
             # Handle URLPath objects specially for cleanup.
             if isinstance(value, URLPath):
                 value.unlink()
-            # Note this is pathlib.Path, which cog.Path is a subclass of. A pathlib.Path object shouldn't make its way here,
+            # Note this is pathlib.Path, which boomx.Path is a subclass of. A pathlib.Path object shouldn't make its way here,
             # but both have an unlink() method, so may as well be safe.
             elif isinstance(value, Path):
                 # This could be missing_ok=True when we drop support for Python 3.7
@@ -296,7 +296,7 @@ For example:
     if get_origin(OutputType) is Iterator:
         # Annotated allows us to attach Field annotations to the list, which we use to mark that this is an iterator
         # https://pydantic-docs.helpmanual.io/usage/schema/#typingannotated-fields
-        OutputType = Annotated[List[get_args(OutputType)[0]], Field(**{"x-cog-array-type": "iterator"})]  # type: ignore
+        OutputType = Annotated[List[get_args(OutputType)[0]], Field(**{"x-boomx-array-type": "iterator"})]  # type: ignore
 
     if not hasattr(OutputType, "__name__") or OutputType.__name__ != "Output":
         # Wrap the type in a model called "Output" so it is a consistent name in the OpenAPI schema
@@ -310,15 +310,15 @@ For example:
 
 def human_readable_type_name(t: Type) -> str:
     """
-    Generates a useful-for-humans label for a type. For builtin types, it's just the class name (eg "str" or "int"). For other types, it includes the module (eg "pathlib.Path" or "cog.File").
+    Generates a useful-for-humans label for a type. For builtin types, it's just the class name (eg "str" or "int"). For other types, it includes the module (eg "pathlib.Path" or "boomx.File").
 
-    The special case for Cog modules is because the type lives in `cog.types` internally, but just `cog` when included as a dependency.
+    The special case for BoomX modules is because the type lives in `boomx.types` internally, but just `boomx` when included as a dependency.
     """
     module = t.__module__
     if module == "builtins":
         return t.__qualname__
-    elif module.split(".")[0] == "cog":
-        module = "cog"
+    elif module.split(".")[0] == "boomx":
+        module = "boomx"
 
     try:
         return module + "." + t.__qualname__

@@ -5,8 +5,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/boomx/cog/pkg/util/console"
-	"github.com/boomx/cog/pkg/util/mime"
+	"github.com/boomx/boomx/pkg/util/console"
+	"github.com/boomx/boomx/pkg/util/mime"
 	"github.com/vincent-petithory/dataurl"
 )
 

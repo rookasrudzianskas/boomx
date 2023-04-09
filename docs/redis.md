@@ -2,23 +2,23 @@
 
 > **Note:** The queue API is experimental and subject to change, but it's ready to use if you like living on the edge!
 
-Long-running deep learning models or batch processing is best architected as a queue. Cog has a built-in queue worker that can process predictions from a Redis queue, and return the output back to the queue.
+Long-running deep learning models or batch processing is best architected as a queue. BoomX has a built-in queue worker that can process predictions from a Redis queue, and return the output back to the queue.
 
 The request queue is implemented with [Redis streams](https://redis.io/topics/streams-intro).
 
-See [github.com/boomx/cog-redis-example](https://github.com/boomx/cog-redis-example), which contains a Docker Compose setup for running a Cog model with the built-in Redis worker.
+See [github.com/boomx/boomx-redis-example](https://github.com/boomx/boomx-redis-example), which contains a Docker Compose setup for running a BoomX model with the built-in Redis worker.
 
 ## Start up the model
 
-The entrypoint to run a Cog model against a queue is `cog.server.redis_queue`. You need to provide the following positional arguments:
+The entrypoint to run a BoomX model against a queue is `boomx.server.redis_queue`. You need to provide the following positional arguments:
 
 - `redis_host`: the host your redis server is running on.
 - `redis_port`: the port your redis server is listening on.
-- `input_queue`: the queue the Cog model will listen to for prediction requests. This queue should already exist.
-- `upload_url`: the endpoint base Cog will `PUT` output files to. See below for more details.
-- `consumer_id`: The name the Cog model will use to identify itself in the Redis group (also called "consumer name" by Redis).
-- `model_id`: a unique ID for the Cog model, used to label setup logs.
-- `log_queue`: the queue the Cog model should send setup logs to (prediction logs are sent as part of prediction responses).
+- `input_queue`: the queue the BoomX model will listen to for prediction requests. This queue should already exist.
+- `upload_url`: the endpoint base BoomX will `PUT` output files to. See below for more details.
+- `consumer_id`: The name the BoomX model will use to identify itself in the Redis group (also called "consumer name" by Redis).
+- `model_id`: a unique ID for the BoomX model, used to label setup logs.
+- `log_queue`: the queue the BoomX model should send setup logs to (prediction logs are sent as part of prediction responses).
 
 Note: logging is changing as part of 0.3.0, so the `model_id` and `log_queue` arguments are likely to change soon.
 
@@ -28,7 +28,7 @@ You can optionally provide the following positional argument:
 
 For example:
 
-    docker run python -m cog.server.redis_queue \
+    docker run python -m boomx.server.redis_queue \
         redis 6379 my-predict-queue \
         https://example.com/ab48b7ff-1589-4360-a54b-47f9d8d3f6b7/ \
         worker-1 \
@@ -39,16 +39,16 @@ After starting, [the `setup()` method of the predictor](python.md#predictorsetup
 
 ### File uploads
 
-Cog will make a PUT request to the `upload_url` provided, with the filename appended. For example, if you provide an `upload_url` of `https://example.com/upload/` then Cog might send a PUT request to `https://example.com/upload/output.png`. After the PUT request is finished, it will include the final URL it sent to as the value in the output.
+BoomX will make a PUT request to the `upload_url` provided, with the filename appended. For example, if you provide an `upload_url` of `https://example.com/upload/` then BoomX might send a PUT request to `https://example.com/upload/output.png`. After the PUT request is finished, it will include the final URL it sent to as the value in the output.
 
-It respects redirects, so you probably want to issue a 307 redirect to a unique URL that Cog can PUT the file to. This also gives an opportunity to sign the URL, if you need to provide permissions, for example to a GCS or S3 bucket. Cog will strip query strings from the final URL, to get rid of any signing information that might be included.
+It respects redirects, so you probably want to issue a 307 redirect to a unique URL that BoomX can PUT the file to. This also gives an opportunity to sign the URL, if you need to provide permissions, for example to a GCS or S3 bucket. BoomX will strip query strings from the final URL, to get rid of any signing information that might be included.
 
 ## Enqueue a prediction
 
 The message body should be a JSON object with the following fields:
 
 - `input`: a JSON object with the same keys as the [arguments to the `predict()` function](python.md). Any `File` or `Path` inputs are passed as URLs.
-- `webhook`: the URL Cog will send responses to.
+- `webhook`: the URL BoomX will send responses to.
 - `webhook_events_filter` (optional): a list of events to send webhooks for. May contain `start`, `output`, `logs` and `completed`. Defaults to all events. Will always send `completed` events, even if omitted from the list.
 - `cancel_key` (optional): a Redis key to watch to signal that this prediction should be canceled. If the key is created the prediction will be canceled.
 
@@ -110,11 +110,11 @@ If the model yields [streaming output](python.md#streaming-output) then a mid-pr
         "started_at": "2022-09-22T14:31:17Z"
     }
 
-Additionally, Cog will include in the response any fields which sent as part of the request, including `input` and `webhook`.
+Additionally, BoomX will include in the response any fields which sent as part of the request, including `input` and `webhook`.
 
 ### Redis responses
 
-Note: this section documents a deprecated feature, which will be removed in a future version of Cog.
+Note: this section documents a deprecated feature, which will be removed in a future version of BoomX.
 
 If you set `response_queue`, then the response is written to a string key using `SET`. This is instead of sending webhooks, as documented above. Because each message is a complete snapshot of the current state, the previous snapshots are not needed. You can read the values using the `GET` command:
 
@@ -129,7 +129,7 @@ To get notified of updates to the value, you can `SUBSCRIBE` to [keyspace notifi
 ## Kubernetes probes
 
 If the queue worker detects that it is running inside Kubernetes, it will create
-an empty file at `/var/run/cog/ready` when the predictor's `setup()` method has
+an empty file at `/var/run/boomx/ready` when the predictor's `setup()` method has
 completed successfully.
 
 This can be used together with a [readiness probe][k8s-readiness] and a [rollout
@@ -147,14 +147,14 @@ readinessProbe:
     command:
       - test
       - -f
-      - /var/run/cog/ready
+      - /var/run/boomx/ready
   initialDelaySeconds: 1
   periodSeconds: 1
 ```
 
 ## Telemetry
 
-Cog's queue worker is instrumented using [OpenTelemetry](https://opentelemetry.io). For setup it sends:
+BoomX's queue worker is instrumented using [OpenTelemetry](https://opentelemetry.io). For setup it sends:
 
 - a span when the queue worker starts
 - an event when it spawns the predictor subprocess
@@ -176,6 +176,6 @@ Telemetry is enabled when the `OTEL_SERVICE_NAME` environment variable is set. T
 
 [1]: https://opentelemetry-python.readthedocs.io/en/latest/sdk/environment_variables.html
 
-If a `traceparent` parameter is provided with the prediction request, Cog will use that value as the parent for the prediction spans. This allows spans from Cog to show up in distributed traces. The parameter should be in the W3C format, eg:
+If a `traceparent` parameter is provided with the prediction request, BoomX will use that value as the parent for the prediction spans. This allows spans from BoomX to show up in distributed traces. The parameter should be in the W3C format, eg:
 
     00-0af7651916cd43dd8448eb211c80319c-b7ad6b7169203331-01

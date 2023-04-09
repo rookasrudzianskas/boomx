@@ -1,4 +1,4 @@
-from cog import BasePredictor, File, Input, Path
+from boomx import BasePredictor, File, Input, Path
 
 
 class Predictor(BasePredictor):

@@ -8,8 +8,8 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/boomx/cog/pkg/util/console"
-	"github.com/boomx/cog/pkg/util/slices"
+	"github.com/boomx/boomx/pkg/util/console"
+	"github.com/boomx/boomx/pkg/util/slices"
 )
 
 // TODO(andreas): support conda packages
@@ -122,12 +122,12 @@ func (c *Config) ValidateAndComplete(projectDir string) error {
 	}
 	if c.Predict != "" {
 		if len(strings.Split(c.Predict, ".py:")) != 2 {
-			return fmt.Errorf("'predict' in cog.yaml must be in the form 'predict.py:Predictor")
+			return fmt.Errorf("'predict' in boomx.yaml must be in the form 'predict.py:Predictor")
 		}
 	}
 
 	if len(c.Build.PythonPackages) > 0 && c.Build.PythonRequirements != "" {
-		return fmt.Errorf("Only one of python_packages or python_requirements can be set in your cog.yaml, not both")
+		return fmt.Errorf("Only one of python_packages or python_requirements can be set in your boomx.yaml, not both")
 	}
 
 	// Load python_requirements into memory to simplify reading it multiple times
@@ -263,13 +263,13 @@ Compatible CuDNN versions are: %s`, c.Build.CUDA, c.Build.CuDNN, strings.Join(co
 	if tfVersion != "" {
 		if c.Build.CUDA == "" {
 			if tfCuDNN == "" {
-				return fmt.Errorf("Cog doesn't know what CUDA version is compatible with tensorflow==%s. You might need to upgrade Cog: https://github.com/boomx/cog#upgrade\n\nIf that doesn't work, you need to set the 'cuda' option in cog.yaml to set what version to use. You might be able to find this out from https://www.tensorflow.org/", tfVersion)
+				return fmt.Errorf("BoomX doesn't know what CUDA version is compatible with tensorflow==%s. You might need to upgrade BoomX: https://github.com/boomx/boomx#upgrade\n\nIf that doesn't work, you need to set the 'cuda' option in boomx.yaml to set what version to use. You might be able to find this out from https://www.tensorflow.org/", tfVersion)
 			}
 			console.Debugf("Setting CUDA to version %s from Tensorflow version", tfCUDA)
 			c.Build.CUDA = tfCUDA
 		} else if tfCUDA != c.Build.CUDA {
 			// TODO: can we suggest a CUDA version known to be compatible?
-			console.Warnf("Cog doesn't know if CUDA %s is compatible with Tensorflow %s. This might cause CUDA problems.", c.Build.CUDA, tfVersion)
+			console.Warnf("BoomX doesn't know if CUDA %s is compatible with Tensorflow %s. This might cause CUDA problems.", c.Build.CUDA, tfVersion)
 		}
 		if c.Build.CuDNN == "" && tfCuDNN != "" {
 			console.Debugf("Setting CuDNN to version %s from Tensorflow version", tfCuDNN)
@@ -281,7 +281,7 @@ Compatible CuDNN versions are: %s`, c.Build.CUDA, c.Build.CuDNN, strings.Join(co
 			}
 			console.Debugf("Setting CuDNN to version %s", c.Build.CUDA)
 		} else if tfCuDNN != c.Build.CuDNN {
-			console.Warnf("Cog doesn't know if cuDNN %s is compatible with Tensorflow %s. This might cause CUDA problems.", c.Build.CuDNN, tfVersion)
+			console.Warnf("BoomX doesn't know if cuDNN %s is compatible with Tensorflow %s. This might cause CUDA problems.", c.Build.CuDNN, tfVersion)
 			return fmt.Errorf(`The specified cuDNN version %s is not compatible with tensorflow==%s.
 Compatible cuDNN version is: %s`,
 				c.Build.CuDNN, tfVersion, tfCuDNN)
@@ -289,7 +289,7 @@ Compatible cuDNN version is: %s`,
 	} else if torchVersion != "" {
 		if c.Build.CUDA == "" {
 			if len(torchCUDAs) == 0 {
-				return fmt.Errorf("Cog doesn't know what CUDA version is compatible with torch==%s. You might need to upgrade Cog: https://github.com/boomx/cog#upgrade\n\nIf that doesn't work, you need to set the 'cuda' option in cog.yaml to set what version to use. You might be able to find this out from https://pytorch.org/", torchVersion)
+				return fmt.Errorf("BoomX doesn't know what CUDA version is compatible with torch==%s. You might need to upgrade BoomX: https://github.com/boomx/boomx#upgrade\n\nIf that doesn't work, you need to set the 'cuda' option in boomx.yaml to set what version to use. You might be able to find this out from https://pytorch.org/", torchVersion)
 			}
 			c.Build.CUDA = latestCUDAFrom(torchCUDAs)
 			c.Build.CUDA, err = resolveMinorToPatch(c.Build.CUDA)
@@ -299,7 +299,7 @@ Compatible cuDNN version is: %s`,
 			console.Debugf("Setting CUDA to version %s from Torch version", c.Build.CUDA)
 		} else if !slices.ContainsString(torchCUDAs, c.Build.CUDA) {
 			// TODO: can we suggest a CUDA version known to be compatible?
-			console.Warnf("Cog doesn't know if CUDA %s is compatible with PyTorch %s. This might cause CUDA problems.", c.Build.CUDA, torchVersion)
+			console.Warnf("BoomX doesn't know if CUDA %s is compatible with PyTorch %s. This might cause CUDA problems.", c.Build.CUDA, torchVersion)
 		}
 
 		if c.Build.CuDNN == "" {

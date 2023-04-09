@@ -25,7 +25,7 @@ func (e *codedError) Code() string {
 
 // Error Creators ///////////////////////////////
 
-// The Cog config was not found
+// The BoomX config was not found
 func ConfigNotFound(msg string) error {
 	return &codedError{
 		code: CodeConfigNotFound,

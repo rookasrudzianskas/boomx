@@ -5,8 +5,8 @@ steps:
   - "--build-arg"
   - "cog_version=$_COG_VERSION"
   - "-t"
-  - "us-central1-docker.pkg.dev/boomx/boomx-alpha/cog-director:$_COG_VERSION"
+  - "us-central1-docker.pkg.dev/boomx/boomx-alpha/boomx-director:$_COG_VERSION"
   - "."
 images:
-  - "us-central1-docker.pkg.dev/boomx/boomx-alpha/cog-director:$_COG_VERSION"
+  - "us-central1-docker.pkg.dev/boomx/boomx-alpha/boomx-director:$_COG_VERSION"
 logsBucket: "gs://boomx-cloudbuild"

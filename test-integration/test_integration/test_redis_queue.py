@@ -37,7 +37,7 @@ def model_running(
     director_command = [
         "python",
         "-m",
-        "cog.director",
+        "boomx.director",
         "--redis-consumer-id=test-worker",
         "--redis-input-queue=predict-queue",
         "--redis-url=redis://redis:6379/0",
@@ -52,7 +52,7 @@ def model_running(
     model_command = [
         "python",
         "-m",
-        "cog.server.http",
+        "boomx.server.http",
         "--upload-url=http://upload-server:5000/upload",
         "--await-explicit-shutdown=true",
     ]
@@ -96,7 +96,7 @@ def test_queue_worker_files(
     docker_image, docker_network, redis_client, upload_server, httpserver
 ):
     project_dir = Path(__file__).parent / "fixtures/file-project"
-    subprocess.run(["cog", "build", "-t", docker_image], check=True, cwd=project_dir)
+    subprocess.run(["boomx", "build", "-t", docker_image], check=True, cwd=project_dir)
 
     with open(upload_server / "input.txt", "w") as f:
         f.write("test")
@@ -200,7 +200,7 @@ def test_queue_worker_yielding_file(
     docker_network, docker_image, redis_client, upload_server, httpserver
 ):
     project_dir = Path(__file__).parent / "fixtures/yielding-file-project"
-    subprocess.run(["cog", "build", "-t", docker_image], check=True, cwd=project_dir)
+    subprocess.run(["boomx", "build", "-t", docker_image], check=True, cwd=project_dir)
 
     with open(upload_server / "input.txt", "w") as f:
         f.write("test")
@@ -350,7 +350,7 @@ def test_queue_worker_yielding_file(
 
 def test_queue_worker_yielding(docker_network, docker_image, redis_client, httpserver):
     project_dir = Path(__file__).parent / "fixtures/yielding-project"
-    subprocess.run(["cog", "build", "-t", docker_image], check=True, cwd=project_dir)
+    subprocess.run(["boomx", "build", "-t", docker_image], check=True, cwd=project_dir)
 
     with model_running(docker_image, docker_network):
         predict_id = random_string(10)
@@ -444,7 +444,7 @@ def test_queue_worker_yielding(docker_network, docker_image, redis_client, https
 
 def test_queue_worker_error(docker_network, docker_image, redis_client, httpserver):
     project_dir = Path(__file__).parent / "fixtures/failing-project"
-    subprocess.run(["cog", "build", "-t", docker_image], check=True, cwd=project_dir)
+    subprocess.run(["boomx", "build", "-t", docker_image], check=True, cwd=project_dir)
 
     with model_running(docker_image, docker_network):
         predict_id = random_string(10)
@@ -547,7 +547,7 @@ def test_queue_worker_error_after_output(
     docker_network, docker_image, redis_client, httpserver
 ):
     project_dir = Path(__file__).parent / "fixtures/failing-after-output-project"
-    subprocess.run(["cog", "build", "-t", docker_image], check=True, cwd=project_dir)
+    subprocess.run(["boomx", "build", "-t", docker_image], check=True, cwd=project_dir)
 
     with model_running(docker_image, docker_network):
         predict_id = random_string(10)
@@ -688,7 +688,7 @@ def test_queue_worker_unhandled_error(
     docker_network, docker_image, redis_client, httpserver
 ):
     project_dir = Path(__file__).parent / "fixtures/unhandled-error-project"
-    subprocess.run(["cog", "build", "-t", docker_image], check=True, cwd=project_dir)
+    subprocess.run(["boomx", "build", "-t", docker_image], check=True, cwd=project_dir)
 
     with model_running(docker_image, docker_network):
         predict_id = random_string(10)
@@ -791,7 +791,7 @@ def test_queue_worker_invalid_input(
     docker_network, docker_image, redis_client, httpserver
 ):
     project_dir = Path(__file__).parent / "fixtures/int-project"
-    subprocess.run(["cog", "build", "-t", docker_image], check=True, cwd=project_dir)
+    subprocess.run(["boomx", "build", "-t", docker_image], check=True, cwd=project_dir)
 
     with model_running(docker_image, docker_network):
         predict_id = random_string(10)
@@ -852,7 +852,7 @@ def test_queue_worker_invalid_input(
 
 def test_queue_worker_logging(docker_network, docker_image, redis_client, httpserver):
     project_dir = Path(__file__).parent / "fixtures/logging-project"
-    subprocess.run(["cog", "build", "-t", docker_image], check=True, cwd=project_dir)
+    subprocess.run(["boomx", "build", "-t", docker_image], check=True, cwd=project_dir)
 
     with model_running(docker_image, docker_network):
         predict_id = random_string(10)
@@ -999,7 +999,7 @@ def test_queue_worker_logging(docker_network, docker_image, redis_client, httpse
 
 def test_queue_worker_timeout(docker_network, docker_image, redis_client, httpserver):
     project_dir = Path(__file__).parent / "fixtures/timeout-project"
-    subprocess.run(["cog", "build", "-t", docker_image], check=True, cwd=project_dir)
+    subprocess.run(["boomx", "build", "-t", docker_image], check=True, cwd=project_dir)
 
     with model_running(docker_image, docker_network, predict_timeout=2):
         predict_id = random_string(10)
@@ -1198,7 +1198,7 @@ def test_queue_worker_yielding_timeout(
     docker_image, docker_network, redis_client, httpserver
 ):
     project_dir = Path(__file__).parent / "fixtures/yielding-timeout-project"
-    subprocess.run(["cog", "build", "-t", docker_image], check=True, cwd=project_dir)
+    subprocess.run(["boomx", "build", "-t", docker_image], check=True, cwd=project_dir)
 
     with model_running(docker_image, docker_network, predict_timeout=2):
         predict_id = random_string(10)
@@ -1398,7 +1398,7 @@ def test_queue_worker_complex_output(
     docker_network, docker_image, redis_client, httpserver
 ):
     project_dir = Path(__file__).parent / "fixtures/complex-output-project"
-    subprocess.run(["cog", "build", "-t", docker_image], check=True, cwd=project_dir)
+    subprocess.run(["boomx", "build", "-t", docker_image], check=True, cwd=project_dir)
 
     with model_running(docker_image, docker_network):
         predict_id = random_string(10)
@@ -1484,7 +1484,7 @@ def test_queue_worker_yielding_list_of_complex_output(
     project_dir = (
         Path(__file__).parent / "fixtures/yielding-list-of-complex-output-project"
     )
-    subprocess.run(["cog", "build", "-t", docker_image], check=True, cwd=project_dir)
+    subprocess.run(["boomx", "build", "-t", docker_image], check=True, cwd=project_dir)
 
     with model_running(docker_image, docker_network):
         predict_id = random_string(10)
@@ -1587,7 +1587,7 @@ def test_queue_worker_yielding_list_of_complex_output(
 # the worker shouldn't start taking jobs until the runner has finished setup
 def test_queue_worker_setup(docker_network, docker_image, redis_client, httpserver):
     project_dir = Path(__file__).parent / "fixtures/long-setup-project"
-    subprocess.run(["cog", "build", "-t", docker_image], check=True, cwd=project_dir)
+    subprocess.run(["boomx", "build", "-t", docker_image], check=True, cwd=project_dir)
 
     with model_running(docker_image, docker_network):
         httpserver.expect_request("/webhook", method="POST")
@@ -1662,7 +1662,7 @@ def test_queue_worker_webhook_retries(
     docker_network, docker_image, redis_client, httpserver
 ):
     project_dir = Path(__file__).parent / "fixtures/int-project"
-    subprocess.run(["cog", "build", "-t", docker_image], check=True, cwd=project_dir)
+    subprocess.run(["boomx", "build", "-t", docker_image], check=True, cwd=project_dir)
 
     with model_running(docker_image, docker_network):
         predict_id = random_string(10)
@@ -1763,7 +1763,7 @@ def test_queue_worker_webhook_retries(
 
 def test_queue_worker_cancel(docker_network, docker_image, redis_client, httpserver):
     project_dir = Path(__file__).parent / "fixtures/timeout-project"
-    subprocess.run(["cog", "build", "-t", docker_image], check=True, cwd=project_dir)
+    subprocess.run(["boomx", "build", "-t", docker_image], check=True, cwd=project_dir)
 
     with model_running(docker_image, docker_network):
         predict_id = random_string(10)
@@ -1846,7 +1846,7 @@ def test_queue_worker_report_setup_run_success(
     docker_network, docker_image, redis_client, httpserver
 ):
     project_dir = Path(__file__).parent / "fixtures/int-project"
-    subprocess.run(["cog", "build", "-t", docker_image], check=True, cwd=project_dir)
+    subprocess.run(["boomx", "build", "-t", docker_image], check=True, cwd=project_dir)
 
     httpserver.expect_oneshot_request(
         "/report-setup-run",
@@ -1879,7 +1879,7 @@ def test_queue_worker_report_setup_run_failure(
     docker_network, docker_image, redis_client, httpserver
 ):
     project_dir = Path(__file__).parent / "fixtures/failed-setup-project"
-    subprocess.run(["cog", "build", "-t", docker_image], check=True, cwd=project_dir)
+    subprocess.run(["boomx", "build", "-t", docker_image], check=True, cwd=project_dir)
 
     response = None
 
@@ -1933,7 +1933,7 @@ def test_queue_worker_webhook_events_filter(
     docker_network, docker_image, redis_client, httpserver
 ):
     project_dir = Path(__file__).parent / "fixtures/logging-project"
-    subprocess.run(["cog", "build", "-t", docker_image], check=True, cwd=project_dir)
+    subprocess.run(["boomx", "build", "-t", docker_image], check=True, cwd=project_dir)
 
     with model_running(docker_image, docker_network):
         predict_id = random_string(10)

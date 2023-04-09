@@ -7,7 +7,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/boomx/cog/pkg/util/slices"
+	"github.com/boomx/boomx/pkg/util/slices"
 )
 
 type Interactive struct {

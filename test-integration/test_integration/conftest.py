@@ -14,7 +14,7 @@ def pytest_sessionstart(session):
 
 @pytest.fixture
 def docker_network():
-    name = "cog-test-" + random_string(10)
+    name = "boomx-test-" + random_string(10)
     subprocess.run(["docker", "network", "create", name])
     yield name
     subprocess.run(["docker", "network", "rm", name])
@@ -45,7 +45,7 @@ def redis_client(redis_port):
 
 @pytest.fixture
 def docker_image():
-    image = "cog-test-" + random_string(10)
+    image = "boomx-test-" + random_string(10)
     yield image
     subprocess.run(["docker", "rmi", "-f", image], check=False)
 
@@ -56,11 +56,11 @@ def upload_server_image():
     Build the upload server once for the test run. The image doesn't change.
     """
     subprocess.run(
-        ["docker", "build", "-t", "cog-test-upload-server", "."],
+        ["docker", "build", "-t", "boomx-test-upload-server", "."],
         cwd=Path(__file__).parent.parent / "upload_server",
         check=True,
     )
-    return "cog-test-upload-server"
+    return "boomx-test-upload-server"
 
 
 @pytest.fixture

@@ -7,8 +7,8 @@ import responses
 from responses.registries import OrderedRegistry
 
 
-from cog.director.eventtypes import Health, HealthcheckStatus
-from cog.director.healthchecker import Healthchecker, http_fetcher
+from boomx.director.eventtypes import Health, HealthcheckStatus
+from boomx.director.healthchecker import Healthchecker, http_fetcher
 
 
 def fake_fetcher(statuses):

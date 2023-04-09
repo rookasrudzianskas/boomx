@@ -32,7 +32,7 @@ from ..predictor import (
 )
 from .runner import PredictionRunner, RunnerBusyError, UnknownPredictionError
 
-log = structlog.get_logger("cog.server.http")
+log = structlog.get_logger("boomx.server.http")
 
 
 @unique
@@ -52,7 +52,7 @@ def create_app(
     mode: str = "predict",
 ) -> FastAPI:
     app = FastAPI(
-        title="Cog",  # TODO: mention model name?
+        title="BoomX",  # TODO: mention model name?
         # version=None # TODO
     )
 
@@ -302,7 +302,7 @@ def signal_set_event(event: threading.Event) -> Callable:
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Cog HTTP server")
+    parser = argparse.ArgumentParser(description="BoomX HTTP server")
     parser.add_argument(
         "--threads",
         dest="threads",
@@ -315,7 +315,7 @@ if __name__ == "__main__":
         dest="upload_url",
         type=str,
         default=None,
-        help="An endpoint for Cog to PUT output files to",
+        help="An endpoint for BoomX to PUT output files to",
     )
     parser.add_argument(
         "--await-explicit-shutdown",
@@ -334,9 +334,9 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
 
-    # log level is configurable so we can make it quiet or verbose for `cog predict`
-    # cog predict --debug       # -> debug
-    # cog predict               # -> warning
+    # log level is configurable so we can make it quiet or verbose for `boomx predict`
+    # boomx predict --debug       # -> debug
+    # boomx predict               # -> warning
     # docker run <image-name>   # -> info (default)
     log_level = logging.getLevelName(os.environ.get("COG_LOG_LEVEL", "INFO").upper())
     setup_logging(log_level=log_level)

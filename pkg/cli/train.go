@@ -5,11 +5,11 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/boomx/cog/pkg/config"
-	"github.com/boomx/cog/pkg/docker"
-	"github.com/boomx/cog/pkg/image"
-	"github.com/boomx/cog/pkg/predict"
-	"github.com/boomx/cog/pkg/util/console"
+	"github.com/boomx/boomx/pkg/config"
+	"github.com/boomx/boomx/pkg/docker"
+	"github.com/boomx/boomx/pkg/image"
+	"github.com/boomx/boomx/pkg/predict"
+	"github.com/boomx/boomx/pkg/util/console"
 	"github.com/spf13/cobra"
 )
 
@@ -68,7 +68,7 @@ func cmdTrain(cmd *cobra.Command, args []string) error {
 		GPUs:    gpus,
 		Image:   imageName,
 		Volumes: volumes,
-		Args:    []string{"python", "-m", "cog.server.http", "--x-mode", "train"},
+		Args:    []string{"python", "-m", "boomx.server.http", "--x-mode", "train"},
 	})
 
 	go func() {

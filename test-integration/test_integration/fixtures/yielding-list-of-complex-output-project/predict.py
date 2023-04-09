@@ -2,7 +2,7 @@ import io
 from time import sleep
 from typing import Iterator, List
 
-from cog import BasePredictor, File
+from boomx import BasePredictor, File
 from pydantic import BaseModel
 
 

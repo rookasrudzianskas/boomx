@@ -16,15 +16,15 @@ from hypothesis.stateful import (
     rule,
 )
 
-from cog.server.eventtypes import (
+from boomx.server.eventtypes import (
     Done,
     Heartbeat,
     Log,
     PredictionOutput,
     PredictionOutputType,
 )
-from cog.server.exceptions import FatalWorkerException, InvalidStateException
-from cog.server.worker import Worker
+from boomx.server.exceptions import FatalWorkerException, InvalidStateException
+from boomx.server.worker import Worker
 
 # Set a longer deadline on CI as the instances are a bit slower.
 settings.register_profile("ci", max_examples=100, deadline=1000)

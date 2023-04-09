@@ -2,7 +2,7 @@ from PIL import Image
 import os
 import tempfile
 
-from cog import BasePredictor, Path
+from boomx import BasePredictor, Path
 
 class Predictor(BasePredictor):
     def predict(self) -> Path:

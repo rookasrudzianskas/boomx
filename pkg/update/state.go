@@ -6,8 +6,8 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/boomx/cog/pkg/util/console"
-	"github.com/boomx/cog/pkg/util/files"
+	"github.com/boomx/boomx/pkg/util/console"
+	"github.com/boomx/boomx/pkg/util/files"
 )
 
 type state struct {
@@ -70,7 +70,7 @@ func writeState(s *state) error {
 }
 
 func userDir() (string, error) {
-	return homedir.Expand("~/.config/cog")
+	return homedir.Expand("~/.config/boomx")
 }
 
 func statePath() (string, error) {

@@ -1,7 +1,7 @@
-# Prediction interface for Cog ⚙️
-# https://github.com/boomx/cog/blob/main/docs/python.md
+# Prediction interface for BoomX ⚙️
+# https://github.com/boomx/boomx/blob/main/docs/python.md
 
-from cog import BasePredictor, Input, Path
+from boomx import BasePredictor, Input, Path
 
 
 class Predictor(BasePredictor):

@@ -1,12 +1,12 @@
-/cog
+/boomx
 .ipynb_checkpoints/
 Untitled*.ipynb
 __pycache__
-.cog
+.boomx
 .hypothesis/
 dist
 *.egg-info
-pkg/dockerfile/embed/cog.whl
+pkg/dockerfile/embed/boomx.whl
 python/build
 # Used by a vim plugin (projectionist)
 .projections.json

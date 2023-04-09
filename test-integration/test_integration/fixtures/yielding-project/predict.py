@@ -1,7 +1,7 @@
 from time import sleep
 from typing import Iterator
 
-from cog import BasePredictor
+from boomx import BasePredictor
 
 
 class Predictor(BasePredictor):

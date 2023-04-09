@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/boomx/cog/pkg/cli"
-	"github.com/boomx/cog/pkg/util/console"
+	"github.com/boomx/boomx/pkg/cli"
+	"github.com/boomx/boomx/pkg/util/console"
 )
 
 func main() {

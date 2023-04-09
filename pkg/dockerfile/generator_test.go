@@ -8,7 +8,7 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/boomx/cog/pkg/config"
+	"github.com/boomx/boomx/pkg/config"
 )
 
 func testTini() string {
@@ -25,8 +25,8 @@ ENTRYPOINT ["/sbin/tini", "--"]
 }
 
 func testInstallCog(relativeTmpDir string) string {
-	return fmt.Sprintf(`COPY %s/cog-0.0.1.dev-py3-none-any.whl /tmp/cog-0.0.1.dev-py3-none-any.whl
-RUN --mount=type=cache,target=/root/.cache/pip pip install /tmp/cog-0.0.1.dev-py3-none-any.whl`, relativeTmpDir)
+	return fmt.Sprintf(`COPY %s/boomx-0.0.1.dev-py3-none-any.whl /tmp/boomx-0.0.1.dev-py3-none-any.whl
+RUN --mount=type=cache,target=/root/.cache/pip pip install /tmp/boomx-0.0.1.dev-py3-none-any.whl`, relativeTmpDir)
 }
 
 func testInstallPython(version string) string {
@@ -83,7 +83,7 @@ ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/x86_64-linux-gnu:/usr/local/nvidia
 ` + testTini() + testInstallCog(gen.relativeTmpDir) + `
 WORKDIR /src
 EXPOSE 5000
-CMD ["python", "-m", "cog.server.http"]
+CMD ["python", "-m", "boomx.server.http"]
 COPY . /src`
 
 	require.Equal(t, expected, actual)
@@ -112,7 +112,7 @@ ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/x86_64-linux-gnu:/usr/local/nvidia
 ` + testTini() + testInstallPython("3.8") + testInstallCog(gen.relativeTmpDir) + `
 WORKDIR /src
 EXPOSE 5000
-CMD ["python", "-m", "cog.server.http"]
+CMD ["python", "-m", "boomx.server.http"]
 COPY . /src`
 
 	require.Equal(t, expected, actual)
@@ -154,7 +154,7 @@ RUN --mount=type=cache,target=/root/.cache/pip pip install -r /tmp/requirements.
 RUN cowsay moo
 WORKDIR /src
 EXPOSE 5000
-CMD ["python", "-m", "cog.server.http"]
+CMD ["python", "-m", "boomx.server.http"]
 COPY . /src`
 	require.Equal(t, expected, actual)
 
@@ -204,7 +204,7 @@ RUN --mount=type=cache,target=/root/.cache/pip pip install -r /tmp/requirements.
 RUN cowsay moo
 WORKDIR /src
 EXPOSE 5000
-CMD ["python", "-m", "cog.server.http"]
+CMD ["python", "-m", "boomx.server.http"]
 COPY . /src`
 
 	require.Equal(t, expected, actual)
@@ -244,7 +244,7 @@ RUN --mount=type=cache,target=/var/cache/apt apt-get update -qq && apt-get insta
 RUN cowsay moo
 WORKDIR /src
 EXPOSE 5000
-CMD ["python", "-m", "cog.server.http"]
+CMD ["python", "-m", "boomx.server.http"]
 COPY . /src`
 	require.Equal(t, expected, actual)
 

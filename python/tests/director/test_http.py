@@ -3,9 +3,9 @@ import queue
 import pytest
 from fastapi.testclient import TestClient
 
-from cog.director.eventtypes import Webhook
-from cog.director.http import create_app
-from cog.schema import PredictionResponse
+from boomx.director.eventtypes import Webhook
+from boomx.director.http import create_app
+from boomx.schema import PredictionResponse
 
 
 @pytest.fixture

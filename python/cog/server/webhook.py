@@ -21,15 +21,15 @@ def _get_version() -> str:
 
     try:
         if use_importlib:
-            return version("cog")
+            return version("boomx")
         import pkg_resources
 
-        return pkg_resources.get_distribution("cog").version
+        return pkg_resources.get_distribution("boomx").version
     except Exception:
         return "unknown"
 
 
-_user_agent = f"cog-worker/{_get_version()}"
+_user_agent = f"boomx-worker/{_get_version()}"
 _response_interval = float(os.environ.get("COG_THROTTLE_RESPONSE_INTERVAL", 0.5))
 
 

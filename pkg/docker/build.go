@@ -7,8 +7,8 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/boomx/cog/pkg/util"
-	"github.com/boomx/cog/pkg/util/console"
+	"github.com/boomx/boomx/pkg/util"
+	"github.com/boomx/boomx/pkg/util/console"
 )
 
 func Build(dir, dockerfile, imageName string, progressOutput string) error {

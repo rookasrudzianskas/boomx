@@ -5,7 +5,7 @@ import (
 	"os/exec"
 	"strings"
 
-	"github.com/boomx/cog/pkg/util/console"
+	"github.com/boomx/boomx/pkg/util/console"
 )
 
 func Pull(image string) error {

@@ -5,15 +5,15 @@ import time
 from datetime import datetime
 from unittest import mock
 
-from cog.schema import PredictionRequest, PredictionResponse, Status, WebhookEvent
-from cog.server.eventtypes import (
+from boomx.schema import PredictionRequest, PredictionResponse, Status, WebhookEvent
+from boomx.server.eventtypes import (
     Done,
     Heartbeat,
     Log,
     PredictionOutput,
     PredictionOutputType,
 )
-from cog.server.runner import (
+from boomx.server.runner import (
     PredictionEventHandler,
     PredictionRunner,
     RunnerBusyError,

@@ -1,5 +1,5 @@
 """
-python -m cog.command.specification
+python -m boomx.command.specification
 
 This prints a JSON object describing the inputs of the model.
 """
@@ -19,7 +19,7 @@ if __name__ == "__main__":
             app = create_app(config, shutdown_event=None)
             schema = app.openapi()
     except (ConfigDoesNotExist, PredictorNotSet):
-        # If there is no cog.yaml or 'predict' has not been set, then there is no type signature.
+        # If there is no boomx.yaml or 'predict' has not been set, then there is no type signature.
         # Not an error, there just isn't anything.
         pass
     print(json.dumps(schema, indent=2))

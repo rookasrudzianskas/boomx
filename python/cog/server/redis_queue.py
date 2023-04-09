@@ -75,7 +75,7 @@ class RedisQueueWorker:
         self.setup_time_queue = input_queue + self.SETUP_TIME_QUEUE_SUFFIX
         self.predict_time_queue = input_queue + self.RUN_TIME_QUEUE_SUFFIX
         self.stats_queue_length = 100
-        self.tracer = trace.get_tracer("cog")
+        self.tracer = trace.get_tracer("boomx")
         self.probes = ProbeHelper()
 
         sys.stderr.write(
@@ -498,12 +498,12 @@ if __name__ == "__main__":
     parser = ArgumentParser()
 
     # accept positional arguments for backwards compatibility
-    # TODO remove this in a future version of Cog
+    # TODO remove this in a future version of BoomX
     parser.add_argument("positional_args", nargs="*")
 
     # accepting redis-host and redis-port for backwards compatibility, they are
     # replaced by the single --redis-url.
-    # TODO remove these two arguments in a future version of Cog
+    # TODO remove these two arguments in a future version of BoomX
     parser.add_argument("--redis-host")
     parser.add_argument("--redis-port", type=int)
     parser.add_argument("--redis-url")

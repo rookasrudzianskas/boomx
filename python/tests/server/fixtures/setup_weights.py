@@ -1,4 +1,4 @@
-from cog import File
+from boomx import File
 
 
 class Predictor:

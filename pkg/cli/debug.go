@@ -5,10 +5,10 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/boomx/cog/pkg/config"
-	"github.com/boomx/cog/pkg/dockerfile"
-	"github.com/boomx/cog/pkg/global"
-	"github.com/boomx/cog/pkg/util/console"
+	"github.com/boomx/boomx/pkg/config"
+	"github.com/boomx/boomx/pkg/dockerfile"
+	"github.com/boomx/boomx/pkg/global"
+	"github.com/boomx/boomx/pkg/util/console"
 )
 
 func newDebugCommand() *cobra.Command {

@@ -10,8 +10,8 @@ import (
 	"runtime"
 	"time"
 
-	"github.com/boomx/cog/pkg/global"
-	"github.com/boomx/cog/pkg/util/console"
+	"github.com/boomx/boomx/pkg/global"
+	"github.com/boomx/boomx/pkg/util/console"
 )
 
 func isUpdateEnabled() bool {
@@ -19,7 +19,7 @@ func isUpdateEnabled() bool {
 }
 
 // DisplayAndCheckForRelease will display an update message if an update is available and will check for a new update in the background
-// The result of that check will then be displayed the next time the user runs Cog
+// The result of that check will then be displayed the next time the user runs BoomX
 // Returns errors which the caller is assumed to ignore so as not to break the client
 func DisplayAndCheckForRelease() error {
 	if !isUpdateEnabled() {
@@ -32,7 +32,7 @@ func DisplayAndCheckForRelease() error {
 	}
 
 	if s.Version != global.Version {
-		console.Debugf("Resetting update message because Cog has been upgraded")
+		console.Debugf("Resetting update message because BoomX has been upgraded")
 		if err := writeState(&state{Message: "", LastChecked: time.Now(), Version: global.Version}); err != nil {
 			return err
 		}
@@ -77,7 +77,7 @@ type updateCheckResponse struct {
 }
 
 func checkForRelease(ctx context.Context) (*updateCheckResponse, error) {
-	req, err := http.NewRequestWithContext(ctx, "GET", "https://update.cog.run/v1/check", nil)
+	req, err := http.NewRequestWithContext(ctx, "GET", "https://update.boomx.run/v1/check", nil)
 	if err != nil {
 		return nil, err
 	}

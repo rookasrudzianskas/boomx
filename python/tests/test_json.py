@@ -2,9 +2,9 @@ import json
 import os
 import tempfile
 
-import cog
-from cog.files import upload_file
-from cog.json import make_encodeable, upload_files
+import boomx
+from boomx.files import upload_file
+from boomx.json import make_encodeable, upload_files
 import numpy as np
 from pydantic import BaseModel
 
@@ -27,13 +27,13 @@ def test_make_encodeable_encodes_pydantic_models():
 
 def test_make_encodeable_ignores_files():
     class Model(BaseModel):
-        path: cog.Path
+        path: boomx.Path
 
     temp_dir = tempfile.mkdtemp()
     temp_path = os.path.join(temp_dir, "my_file.txt")
     with open(temp_path, "w") as fh:
         fh.write("file content")
-    path = cog.Path(temp_path)
+    path = boomx.Path(temp_path)
     model = Model(path=path)
     assert make_encodeable(model) == {"path": path}
 
@@ -43,7 +43,7 @@ def test_upload_files():
     temp_path = os.path.join(temp_dir, "my_file.txt")
     with open(temp_path, "w") as fh:
         fh.write("file content")
-    obj = {"path": cog.Path(temp_path)}
+    obj = {"path": boomx.Path(temp_path)}
     assert upload_files(obj, upload_file) == {
         "path": "data:text/plain;base64,ZmlsZSBjb250ZW50"
     }

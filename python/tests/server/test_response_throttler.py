@@ -1,7 +1,7 @@
 import time
 
-from cog.schema import Status
-from cog.server.response_throttler import ResponseThrottler
+from boomx.schema import Status
+from boomx.server.response_throttler import ResponseThrottler
 
 
 def test_zero_interval():

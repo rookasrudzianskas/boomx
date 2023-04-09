@@ -1,4 +1,4 @@
-from cog import BaseModel, File
+from boomx import BaseModel, File
 import io
 
 

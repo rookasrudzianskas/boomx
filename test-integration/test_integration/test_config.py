@@ -4,7 +4,7 @@ import subprocess
 
 def test_config(tmpdir_factory):
     tmpdir = tmpdir_factory.mktemp("project")
-    with open(tmpdir / "cog.yaml", "w") as f:
+    with open(tmpdir / "boomx.yaml", "w") as f:
         cog_yaml = """
 build:
   python_version: "3.8"
@@ -15,7 +15,7 @@ build:
     os.makedirs(subdir)
 
     result = subprocess.run(
-        ["cog", "run", "echo", "hello world"],
+        ["boomx", "run", "echo", "hello world"],
         cwd=subdir,
         check=True,
         capture_output=True,

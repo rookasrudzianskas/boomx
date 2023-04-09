@@ -20,7 +20,7 @@ from .probes import ProbeHelper
 from .webhook import webhook_caller_filtered
 from .worker import Worker
 
-log = structlog.get_logger("cog.server.runner")
+log = structlog.get_logger("boomx.server.runner")
 
 
 class FileUploadError(Exception):

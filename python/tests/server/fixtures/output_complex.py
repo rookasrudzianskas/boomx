@@ -2,7 +2,7 @@ import io
 
 from pydantic import BaseModel
 
-from cog import BasePredictor, File
+from boomx import BasePredictor, File
 
 
 class Output(BaseModel):

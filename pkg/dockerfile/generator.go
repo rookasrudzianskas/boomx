@@ -10,10 +10,10 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/boomx/cog/pkg/config"
+	"github.com/boomx/boomx/pkg/config"
 )
 
-//go:embed embed/cog.whl
+//go:embed embed/boomx.whl
 var cogWheelEmbed []byte
 
 type Generator struct {
@@ -31,11 +31,11 @@ type Generator struct {
 }
 
 func NewGenerator(config *config.Config, dir string) (*Generator, error) {
-	rootTmp := path.Join(dir, ".cog/tmp")
+	rootTmp := path.Join(dir, ".boomx/tmp")
 	if err := os.MkdirAll(rootTmp, 0o755); err != nil {
 		return nil, err
 	}
-	// tmpDir ends up being something like dir/.cog/tmp/build123456789
+	// tmpDir ends up being something like dir/.boomx/tmp/build123456789
 	tmpDir, err := os.MkdirTemp(rootTmp, "build")
 	if err != nil {
 		return nil, err
@@ -97,7 +97,7 @@ func (g *Generator) GenerateBase() (string, error) {
 		run,
 		`WORKDIR /src`,
 		`EXPOSE 5000`,
-		`CMD ["python", "-m", "cog.server.http"]`,
+		`CMD ["python", "-m", "boomx.server.http"]`,
 	}), "\n"), nil
 }
 
@@ -197,7 +197,7 @@ RUN --mount=type=cache,target=/var/cache/apt apt-get update -qq && apt-get insta
 
 func (g *Generator) installCog() (string, error) {
 	// Wheel name needs to be full format otherwise pip refuses to install it
-	cogFilename := "cog-0.0.1.dev-py3-none-any.whl"
+	cogFilename := "boomx-0.0.1.dev-py3-none-any.whl"
 	lines, containerPath, err := g.writeTemp(cogFilename, cogWheelEmbed)
 	if err != nil {
 		return "", err

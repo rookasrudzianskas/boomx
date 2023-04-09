@@ -2,8 +2,8 @@ import requests
 import responses
 from responses import registries
 
-from cog.schema import WebhookEvent
-from cog.server.webhook import webhook_caller, webhook_caller_filtered
+from boomx.schema import WebhookEvent
+from boomx.server.webhook import webhook_caller, webhook_caller_filtered
 
 
 @responses.activate
@@ -72,7 +72,7 @@ def test_webhook_includes_user_agent():
 
     assert len(responses.calls) == 1
     user_agent = responses.calls[0].request.headers["user-agent"]
-    assert user_agent.startswith("cog-worker/")
+    assert user_agent.startswith("boomx-worker/")
 
 
 @responses.activate

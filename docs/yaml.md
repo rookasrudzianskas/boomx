@@ -1,6 +1,6 @@
-# `cog.yaml` reference
+# `boomx.yaml` reference
 
-`cog.yaml` defines how to build a Docker image and how to run predictions on your model inside that image.
+`boomx.yaml` defines how to build a Docker image and how to run predictions on your model inside that image.
 
 It has three keys: [`build`](#build), [`image`](#image), and [`predict`](#predict). It looks a bit like this:
 
@@ -15,7 +15,7 @@ build:
 predict: "predict.py:Predictor"
 ```
 
-Tip: Run [`cog init`](getting-started-own-model.md#initialization) to generate an annotated `cog.yaml` file that can be used as a starting point for setting up your model.
+Tip: Run [`boomx init`](getting-started-own-model.md#initialization) to generate an annotated `boomx.yaml` file that can be used as a starting point for setting up your model.
 
 ## `build`
 
@@ -25,7 +25,7 @@ This stanza describes how to build the Docker image your model runs in. It conta
 
 ### `cuda`
 
-Cog automatically picks the correct version of CUDA to install, but this lets you override it for whatever reason.
+BoomX automatically picks the correct version of CUDA to install, but this lets you override it for whatever reason.
 
 For example:
 
@@ -36,7 +36,7 @@ build:
 
 ### `gpu`
 
-Enable GPUs for this model. When enabled, the [nvidia-docker](https://github.com/NVIDIA/nvidia-docker) base image will be used, and Cog will automatically figure out what versions of CUDA and cuDNN to use based on the version of Python, PyTorch, and Tensorflow that you are using.
+Enable GPUs for this model. When enabled, the [nvidia-docker](https://github.com/NVIDIA/nvidia-docker) base image will be used, and BoomX will automatically figure out what versions of CUDA and cuDNN to use based on the version of Python, PyTorch, and Tensorflow that you are using.
 
 For example:
 
@@ -45,7 +45,7 @@ build:
   gpu: true
 ```
 
-When you use `cog run` or `cog predict`, Cog will automatically pass the `--gpus=all` flag to Docker. When you run a Docker image built with Cog, you'll need to pass this option to `docker run`.
+When you use `boomx run` or `boomx predict`, BoomX will automatically pass the `--gpus=all` flag to Docker. When you run a Docker image built with BoomX, you'll need to pass this option to `docker run`.
 
 ### `python_packages`
 
@@ -67,7 +67,7 @@ build:
   python_version: "3.8.1"
 ```
 
-Cog supports all active branches of Python: 3.7, 3.8, 3.9, 3.10.
+BoomX supports all active branches of Python: 3.7, 3.8, 3.9, 3.10.
 
 Note that these are the versions supported **in the Docker container**, not your host machine. You can run any version(s) of Python you wish on your host machine.
 

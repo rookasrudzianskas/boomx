@@ -14,14 +14,14 @@ const (
 	defaultVersion  = "1.0"
 	jsonschemaOneOf = "number_one_of"
 	jsonschemaAnyOf = "number_any_of"
-	errorString     = `There is a problem in your cog.yaml file. 
+	errorString     = `There is a problem in your boomx.yaml file. 
 %s.
 
 To see what options you can use, take a look at the docs:
-https://github.com/boomx/cog/blob/main/docs/yaml.md
+https://github.com/boomx/boomx/blob/main/docs/yaml.md
 
-You might also need to upgrade Cog, if this option was added in a
-later version of Cog.`
+You might also need to upgrade BoomX, if this option was added in a
+later version of BoomX.`
 )
 
 //go:embed data/config_schema_v1.0.json

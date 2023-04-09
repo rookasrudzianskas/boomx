@@ -1,6 +1,6 @@
 from typing import List
 
-from cog import BaseModel, BasePredictor, Path, Input
+from boomx import BaseModel, BasePredictor, Path, Input
 
 
 class Predictor(BasePredictor):

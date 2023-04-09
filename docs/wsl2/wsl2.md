@@ -1,4 +1,4 @@
-# Using `cog` on Windows 11 with WSL 2
+# Using `boomx` on Windows 11 with WSL 2
 
 - [1. Install the GPU driver](#1-install-the-gpu-driver)
 - [2. Unlocking features](#2-unlocking-features)
@@ -6,11 +6,11 @@
 - [4. Configure WSL 2](#4-configure-wsl-2)
 - [5. Configure CUDA WSL-Ubuntu Toolkit](#5-configure-cuda-wsl-ubuntu-toolkit)
 - [6. Install Docker](#6-install-docker)
-- [7. Install `cog` and pull an image](#7-install-cog-and-pull-an-image)
+- [7. Install `boomx` and pull an image](#7-install-boomx-and-pull-an-image)
 - [8. Run a model in WSL 2](#8-run-a-model-in-wsl-2)
 - [9. References](#9-references)
 
-Running cog on Windows is now possible thanks to WSL 2. Follow this guide to enable WSL 2 and GPU passthrough on Windows 11. 
+Running boomx on Windows is now possible thanks to WSL 2. Follow this guide to enable WSL 2 and GPU passthrough on Windows 11. 
 
 **Windows 10 is not officially supported, as you need to be on an insider build in order to use GPU passthrough.**
 
@@ -141,7 +141,7 @@ Once installed, run `Docker Desktop`, you can ignore the first-run tutorial. Go 
 
 Reboot your computer one more time.
 
-## 7. Install `cog` and pull an image
+## 7. Install `boomx` and pull an image
 
 Open Windows Terminal and enter your WSL 2 VM:
 
@@ -149,18 +149,18 @@ Open Windows Terminal and enter your WSL 2 VM:
 wsl.exe
 ```
 
-Download and install `cog` inside the VM:
+Download and install `boomx` inside the VM:
 
 ```bash
-sudo curl -o /usr/local/bin/cog -L https://github.com/boomx/cog/releases/latest/download/cog_`uname -s`_`uname -m`
-sudo chmod +x /usr/local/bin/cog
+sudo curl -o /usr/local/bin/boomx -L https://github.com/boomx/boomx/releases/latest/download/cog_`uname -s`_`uname -m`
+sudo chmod +x /usr/local/bin/boomx
 ```
 
 Make sure it's available by typing:
 
 ```bash
-which cog # should output /usr/local/bin/cog
-cog --version # should output the cog version number.
+which boomx # should output /usr/local/bin/boomx
+boomx --version # should output the boomx version number.
 ```
 
 ## 8. Run a model in WSL 2
@@ -168,9 +168,9 @@ cog --version # should output the cog version number.
 Finally, make sure it works. Let's try running `afiaka87/glid-3-xl` locally:
 
 ```bash
-cog predict 'r8.im/afiaka87/glid-3-xl' -i prompt="a fresh avocado floating in the water" -o prediction.json
+boomx predict 'r8.im/afiaka87/glid-3-xl' -i prompt="a fresh avocado floating in the water" -o prediction.json
 ```
-![Output from a running cog prediction in Windows Terminal](images/cog_model_output.png)
+![Output from a running boomx prediction in Windows Terminal](images/cog_model_output.png)
 
 While your prediction is running, you can use `Task Manager` to keep an eye on GPU memory consumption:
 
@@ -206,4 +206,4 @@ explorer.exe prediction.png
 - <https://developer.nvidia.com/cuda-downloads?target_os=Linux&target_arch=x86_64&Distribution=WSL-Ubuntu&target_version=2.0>
 - <https://www.docker.com/blog/wsl-2-gpu-support-for-docker-desktop-on-nvidia-gpus/>
 - <https://docs.microsoft.com/en-us/windows/wsl/install-manual#step-4---download-the-linux-kernel-update-package>
-- <https://github.com/boomx/cog>
+- <https://github.com/boomx/boomx>

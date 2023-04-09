@@ -3,7 +3,7 @@ import pickle
 
 import responses
 
-from cog.types import URLFile
+from boomx.types import URLFile
 
 
 @responses.activate

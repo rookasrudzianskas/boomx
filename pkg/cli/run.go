@@ -4,10 +4,10 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/boomx/cog/pkg/config"
-	"github.com/boomx/cog/pkg/docker"
-	"github.com/boomx/cog/pkg/image"
-	"github.com/boomx/cog/pkg/util/console"
+	"github.com/boomx/boomx/pkg/config"
+	"github.com/boomx/boomx/pkg/docker"
+	"github.com/boomx/boomx/pkg/image"
+	"github.com/boomx/boomx/pkg/util/console"
 	"github.com/spf13/cobra"
 )
 

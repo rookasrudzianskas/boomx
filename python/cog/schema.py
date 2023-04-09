@@ -47,7 +47,7 @@ class PredictionRequest(PredictionBaseModel):
     @classmethod
     def with_types(cls, input_type: t.Type) -> t.Any:
         # [compat] Input is implicitly optional -- previous versions of the
-        # Cog HTTP API allowed input to be omitted (e.g. for models that don't
+        # BoomX HTTP API allowed input to be omitted (e.g. for models that don't
         # have any inputs). We should consider changing this in future.
         return pydantic.create_model(
             cls.__name__, __base__=cls, input=(t.Optional[input_type], None)
@@ -73,7 +73,7 @@ class PredictionResponse(PredictionBaseModel):
     @classmethod
     def with_types(cls, input_type: t.Type, output_type: t.Type) -> t.Any:
         # [compat] Input is implicitly optional -- previous versions of the
-        # Cog HTTP API allowed input to be omitted (e.g. for models that don't
+        # BoomX HTTP API allowed input to be omitted (e.g. for models that don't
         # have any inputs). We should consider changing this in future.
         return pydantic.create_model(
             cls.__name__,

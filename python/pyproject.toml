@@ -3,14 +3,14 @@ requires = ["setuptools", "setuptools_scm[toml]"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "cog"
+name = "boomx"
 description = "Containers for machine learning"
 readme = "README.md"
 authors = [
   {name = "boomx", email = "team@boomx.com"}
 ]
 license.file = "LICENSE"
-urls."Source" = "https://github.com/boomx/cog"
+urls."Source" = "https://github.com/boomx/boomx"
 
 requires-python = ">=3.6"
 dependencies = [
@@ -33,4 +33,4 @@ dynamic = ["version"]
 
 [tool.setuptools_scm]
 root = ".."
-write_to = "python/cog/_version.py"
+write_to = "python/boomx/_version.py"

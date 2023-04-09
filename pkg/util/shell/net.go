@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/boomx/cog/pkg/util/console"
+	"github.com/boomx/boomx/pkg/util/console"
 )
 
 func WaitForPort(port int, timeout time.Duration) error {

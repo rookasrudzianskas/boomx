@@ -1,8 +1,8 @@
 # Prediction interface reference
 
-This document defines the API of the `cog` Python module, which is used to define the interface for running predictions on your model.
+This document defines the API of the `boomx` Python module, which is used to define the interface for running predictions on your model.
 
-Tip: Run [`cog init`](getting-started-own-model.md#initialization) to generate an annotated `predict.py` file that can be used as a starting point for setting up your model.
+Tip: Run [`boomx init`](getting-started-own-model.md#initialization) to generate an annotated `predict.py` file that can be used as a starting point for setting up your model.
 
 ## Contents
 
@@ -20,10 +20,10 @@ Tip: Run [`cog init`](getting-started-own-model.md#initialization) to generate a
 
 ## `BasePredictor`
 
-You define how Cog runs predictions on your model by defining a class that inherits from `BasePredictor`. It looks something like this:
+You define how BoomX runs predictions on your model by defining a class that inherits from `BasePredictor`. It looks something like this:
 
 ```python
-from cog import BasePredictor, Path, Input
+from boomx import BasePredictor, Path, Input
 import torch
 
 class Predictor(BasePredictor):
@@ -60,16 +60,16 @@ This _required_ method is where you call the model that was loaded during `setup
 
 The `predict()` method takes an arbitrary list of named arguments, where each argument name must correspond to an [`Input()`](#inputkwargs) annotation.
 
-`predict()` can return strings, numbers, [`cog.Path`](#path) objects representing files on disk, or lists or dicts of those types. You can also define a custom [`Output()`](#outputbasemodel) for more complex return types.
+`predict()` can return strings, numbers, [`boomx.Path`](#path) objects representing files on disk, or lists or dicts of those types. You can also define a custom [`Output()`](#outputbasemodel) for more complex return types.
 
 #### Streaming output
 
-Cog models can stream output as the `predict()` method is running. For example, a language model can output tokens as they're being generated and an image generation model can output a images they are being generated.
+BoomX models can stream output as the `predict()` method is running. For example, a language model can output tokens as they're being generated and an image generation model can output a images they are being generated.
 
-To support streaming output in your Cog model, add `from typing import Iterator` to your predict.py file. The `typing` package is a part of Python's standard library so it doesn't need to be installed. Then add a return type annotation to the `predict()` method in the form `-> Iterator[<type>]` where `<type>` can be one of `str`, `int`, `float`, `bool`, `cog.File`, or `cog.Path`.
+To support streaming output in your BoomX model, add `from typing import Iterator` to your predict.py file. The `typing` package is a part of Python's standard library so it doesn't need to be installed. Then add a return type annotation to the `predict()` method in the form `-> Iterator[<type>]` where `<type>` can be one of `str`, `int`, `float`, `bool`, `boomx.File`, or `boomx.Path`.
 
 ```py
-from cog import BasePredictor, Path
+from boomx import BasePredictor, Path
 from typing import Iterator
 
 class Predictor(BasePredictor):
@@ -83,7 +83,7 @@ class Predictor(BasePredictor):
 If you're streaming text output, you can use `ConcatenateIterator` to hint that the output should be concatenated together into a single string. This is useful on BoomX to display the output as a string instead of a list of strings.
 
 ```py
-from cog import BasePredictor, Path, ConcatenateIterator
+from boomx import BasePredictor, Path, ConcatenateIterator
 
 class Predictor(BasePredictor):
     def predict(self) -> ConcatenateIterator[str]:
@@ -94,7 +94,7 @@ class Predictor(BasePredictor):
 
 ## `Input(**kwargs)`
 
-Use cog's `Input()` function to define each of the parameters in your `predict()` method:
+Use boomx's `Input()` function to define each of the parameters in your `predict()` method:
 
 ```py
 class Predictor(BasePredictor):
@@ -130,12 +130,12 @@ class Predictor(BasePredictor):
 
 ## Output
 
-Cog predictors can return a simple data type like a string, number, float, or boolean. Use Python's `-> <type>` syntax to annotate the return type.
+BoomX predictors can return a simple data type like a string, number, float, or boolean. Use Python's `-> <type>` syntax to annotate the return type.
 
 Here's an example of a predictor that returns a string:
 
 ```py
-from cog import BasePredictor
+from boomx import BasePredictor
 
 class Predictor(BasePredictor):
     def predict(self) -> str:
@@ -147,7 +147,7 @@ class Predictor(BasePredictor):
 To return a complex object with multiple values, define an `Output` object with multiple fields to return from your `predict()` method:
 
 ```py
-from cog import BasePredictor, BaseModel, File
+from boomx import BasePredictor, BaseModel, File
 
 class Output(BaseModel):
     file: File
@@ -165,7 +165,7 @@ Each of the output object's properties must be one of the supported output types
 The `predict()` method can return a list of any of the supported output types. Here's an example that outputs multiple files:
 
 ```py
-from cog import BasePredictor, Path
+from boomx import BasePredictor, Path
 
 class Predictor(BasePredictor):
     def predict(self) -> List[Path]:
@@ -186,7 +186,7 @@ Files are named in the format `output.<index>.<extension>`, e.g. `output.0.txt`,
 To conditionally omit properties from the Output object, define them using `typing.Optional`:
 
 ```py
-from cog import BaseModel, BasePredictor, Path
+from boomx import BaseModel, BasePredictor, Path
 from typing import Optional
 
 class Output(BaseModel):
@@ -209,17 +209,17 @@ Each parameter of the `predict()` method must be annotated with a type. The meth
 - `int`: an integer
 - `float`: a floating point number
 - `bool`: a boolean
-- [`cog.File`](#file): a file-like object representing a file
-- [`cog.Path`](#path): a path to a file on disk
+- [`boomx.File`](#file): a file-like object representing a file
+- [`boomx.Path`](#path): a path to a file on disk
 
 ## `File()`
 
-The `cog.File` object is used to get files in and out of models. It represents a _file handle_.
+The `boomx.File` object is used to get files in and out of models. It represents a _file handle_.
 
-For models that return a `cog.File` object, the prediction output returned by Cog's built-in HTTP server will be a URL.
+For models that return a `boomx.File` object, the prediction output returned by BoomX's built-in HTTP server will be a URL.
 
 ```python
-from cog import BasePredictor, File, Input, Path
+from boomx import BasePredictor, File, Input, Path
 from PIL import Image
 
 class Predictor(BasePredictor):
@@ -231,24 +231,24 @@ class Predictor(BasePredictor):
 
 ## `Path()`
 
-The `cog.Path` object is used to get files in and out of models. It represents a _path to a file on disk_.
+The `boomx.Path` object is used to get files in and out of models. It represents a _path to a file on disk_.
 
-`cog.Path` is a subclass of Python's [`pathlib.Path`](https://docs.python.org/3/library/pathlib.html#basic-use) and can be used as a drop-in replacement.
+`boomx.Path` is a subclass of Python's [`pathlib.Path`](https://docs.python.org/3/library/pathlib.html#basic-use) and can be used as a drop-in replacement.
 
-For models that return a `cog.Path` object, the prediction output returned by Cog's built-in HTTP server will be a URL.
+For models that return a `boomx.Path` object, the prediction output returned by BoomX's built-in HTTP server will be a URL.
 
 This example takes an input file, resizes it, and returns the resized image:
 
 ```python
 import tempfile
-from cog import BasePredictor, Input, Path
+from boomx import BasePredictor, Input, Path
 
 class Predictor(BasePredictor):
     def predict(self, image: Path = Input(description="Image to enlarge")) -> Path:
         upscaled_image = do_some_processing(image)
 
-        # To output `cog.Path` objects the file needs to exist, so create a temporary file first.
-        # This file will automatically be deleted by Cog after it has been returned.
+        # To output `boomx.Path` objects the file needs to exist, so create a temporary file first.
+        # This file will automatically be deleted by BoomX after it has been returned.
         output_path = Path(tempfile.mkdtemp()) / "upscaled.png"
         upscaled_image.save(output)
         return Path(output_path)

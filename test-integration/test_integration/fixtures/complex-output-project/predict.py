@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-from cog import BasePredictor
+from boomx import BasePredictor
 
 
 class Output(BaseModel):

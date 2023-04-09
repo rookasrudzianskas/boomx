@@ -1,19 +1,19 @@
 # Getting started
 
-This guide will walk you through what you can do with Cog by using an example model.
+This guide will walk you through what you can do with BoomX by using an example model.
 
 ## Prerequisites
 
-- **macOS or Linux**. Cog works on macOS and Linux, but does not currently support Windows.
-- **Docker**. Cog uses Docker to create a container for your model. You'll need to [install Docker](https://docs.docker.com/get-docker/) before you can run Cog.
+- **macOS or Linux**. BoomX works on macOS and Linux, but does not currently support Windows.
+- **Docker**. BoomX uses Docker to create a container for your model. You'll need to [install Docker](https://docs.docker.com/get-docker/) before you can run BoomX.
 
-## Install Cog
+## Install BoomX
 
-First, install Cog:
+First, install BoomX:
 
 ```bash
-sudo curl -o /usr/local/bin/cog -L https://github.com/boomx/cog/releases/latest/download/cog_`uname -s`_`uname -m`
-sudo chmod +x /usr/local/bin/cog
+sudo curl -o /usr/local/bin/boomx -L https://github.com/boomx/boomx/releases/latest/download/cog_`uname -s`_`uname -m`
+sudo chmod +x /usr/local/bin/boomx
 
 ```
 
@@ -22,15 +22,15 @@ sudo chmod +x /usr/local/bin/cog
 Let's make a directory to work in:
 
 ```bash
-mkdir cog-quickstart
-cd cog-quickstart
+mkdir boomx-quickstart
+cd boomx-quickstart
 
 ```
 ## Run commands
 
-The simplest thing you can do with Cog is run a command inside a Docker environment.
+The simplest thing you can do with BoomX is run a command inside a Docker environment.
 
-The first thing you need to do is create a file called `cog.yaml`:
+The first thing you need to do is create a file called `boomx.yaml`:
 
 ```yaml
 build:
@@ -39,12 +39,12 @@ build:
 
 Then, you can run any command inside this environment. For example, enter
 ```bash
-cog run python
+boomx run python
 
 ```
 and you'll get an interactive Python shell:
 ```none
-✓ Building Docker image from cog.yaml... Successfully built 8f54020c8981
+✓ Building Docker image from boomx.yaml... Successfully built 8f54020c8981
 Running 'python' in Docker with the current directory mounted as a volume...
 ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 
@@ -59,7 +59,7 @@ Inside this Docker environment you can do anything – run a Jupyter notebook, 
 
 ## Run predictions on a model
 
-Let's pretend we've trained a model. With Cog, we can define how to run predictions on it in a standard way, so other people can easily run predictions on it without having to hunt around for a prediction script.
+Let's pretend we've trained a model. With BoomX, we can define how to run predictions on it in a standard way, so other people can easily run predictions on it without having to hunt around for a prediction script.
 
 First, run this to get some pre-trained model weights:
 
@@ -74,7 +74,7 @@ Then, we need to write some code to describe how predictions are run on the mode
 Save this to `predict.py`:
 ```python
 from typing import Any
-from cog import BasePredictor, Input, Path
+from boomx import BasePredictor, Input, Path
 from tensorflow.keras.applications.resnet50 import ResNet50
 from tensorflow.keras.preprocessing import image as keras_image
 from tensorflow.keras.applications.resnet50 import preprocess_input, decode_predictions
@@ -100,7 +100,7 @@ class Predictor(BasePredictor):
         return decode_predictions(preds, top=3)[0]
 ```
 
-We also need to point Cog at this, and tell it what Python dependencies to install. Update `cog.yaml` to look like this:
+We also need to point BoomX at this, and tell it what Python dependencies to install. Update `boomx.yaml` to look like this:
 
 ```yaml
 build:
@@ -118,10 +118,10 @@ IMAGE_URL=https://gist.githubusercontent.com/bfirsh/3c2115692682ae260932a67d93fd
 curl $IMAGE_URL > input.jpg
 
 ```
-Now, let's run the model using Cog:
+Now, let's run the model using BoomX:
 
 ```bash
-cog predict -i image=@input.jpg
+boomx predict -i image=@input.jpg
 
 ```
 If you see the following output
@@ -146,29 +146,29 @@ If you see the following output
 ```
 then it worked!
 
-Note: The first time you run `cog predict`, the build process will be triggered to generate a Docker container that can run your model. The next time you run `cog predict` the pre-built container will be used.
+Note: The first time you run `boomx predict`, the build process will be triggered to generate a Docker container that can run your model. The next time you run `boomx predict` the pre-built container will be used.
 
 ## Build an image
 
 We can bake your model's code, the trained weights, and the Docker environment into a Docker image. This image serves predictions with an HTTP server, and can be deployed to anywhere that Docker runs to serve real-time predictions.
 
 ```bash
-cog build -t resnet
+boomx build -t resnet
 # Building Docker image...
 # Built resnet:latest
 
 ```
 
-Once you've built the image, you can optionally view the generated dockerfile to get a sense of what Cog is doing under the hood:
+Once you've built the image, you can optionally view the generated dockerfile to get a sense of what BoomX is doing under the hood:
 
 ```bash
-cog debug dockerfile
+boomx debug dockerfile
 ```
 
-You can run this image with `cog predict` by passing the filename as an argument:
+You can run this image with `boomx predict` by passing the filename as an argument:
 
 ```bash
-cog predict resnet -i image=@input.jpg
+boomx predict resnet -i image=@input.jpg
 
 ```
 
@@ -187,16 +187,16 @@ curl http://localhost:5000/predictions -X POST \
 
 ```
 
-As a shorthand, you can add the Docker image's name as an extra line in `cog.yaml`:
+As a shorthand, you can add the Docker image's name as an extra line in `boomx.yaml`:
 
 ```yaml
 image: "r8.im/boomx/resnet"
 ```
 
-Once you've done this, you can use `cog push` to build and push the image to a Docker registry:
+Once you've done this, you can use `boomx push` to build and push the image to a Docker registry:
 
 ```bash
-cog push
+boomx push
 # Building r8.im/boomx/resnet...
 # Pushing r8.im/boomx/resnet...
 # Pushed!
@@ -209,7 +209,7 @@ The Docker image is now accessible to anyone or any system that has access to th
 
 Those are the basics! Next, you might want to take a look at:
 
-- [A guide to help you set up your own model on Cog.](getting-started-own-model.md)
+- [A guide to help you set up your own model on BoomX.](getting-started-own-model.md)
 - [A guide explaining how to deploy a model.](deploy.md)
-- [Reference for `cog.yaml`](yaml.md)
+- [Reference for `boomx.yaml`](yaml.md)
 - [Reference for the Python library](python.md)

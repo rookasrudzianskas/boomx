@@ -3,9 +3,9 @@ package cli
 import (
 	"os"
 
-	"github.com/boomx/cog/pkg/config"
-	"github.com/boomx/cog/pkg/image"
-	"github.com/boomx/cog/pkg/util/console"
+	"github.com/boomx/boomx/pkg/config"
+	"github.com/boomx/boomx/pkg/image"
+	"github.com/boomx/boomx/pkg/util/console"
 	"github.com/spf13/cobra"
 )
 
@@ -15,7 +15,7 @@ var buildProgressOutput string
 func newBuildCommand() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "build",
-		Short: "Build an image from cog.yaml",
+		Short: "Build an image from boomx.yaml",
 		Args:  cobra.NoArgs,
 		RunE:  buildCommand,
 	}

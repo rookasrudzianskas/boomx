@@ -1,6 +1,6 @@
 from time import sleep
 
-from cog import BasePredictor
+from boomx import BasePredictor
 
 
 class Predictor(BasePredictor):

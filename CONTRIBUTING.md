@@ -4,7 +4,7 @@
 
 ### Signing your work
 
-Each commit you contribute to Cog must be signed off (not to be confused with **[signing](https://git-scm.com/book/en/v2/Git-Tools-Signing-Your-Work)**). It certifies that you wrote the patch, or have the right to contribute it. It is called the [Developer Certificate of Origin](https://developercertificate.org/) and was originally developed for the Linux kernel.
+Each commit you contribute to BoomX must be signed off (not to be confused with **[signing](https://git-scm.com/book/en/v2/Git-Tools-Signing-Your-Work)**). It certifies that you wrote the patch, or have the right to contribute it. It is called the [Developer Certificate of Origin](https://developercertificate.org/) and was originally developed for the Linux kernel.
 
 If you can certify the following:
 
@@ -49,7 +49,7 @@ You can also create a git hook which will sign off all your commits automaticall
 First, create the hook file and make it executable:
 
 ```sh
-cd your/checkout/of/cog
+cd your/checkout/of/boomx
 touch .git/hooks/prepare-commit-msg
 chmod +x .git/hooks/prepare-commit-msg
 ```
@@ -79,7 +79,7 @@ git interpret-trailers --if-exists doNothing --trailer \
 
 ### Acknowledging contributions
 
-We welcome contributions from everyone, and consider all forms of contribution equally valuable. This includes code, bug reports, feature requests, and documentation. We use [All Contributors](https://allcontributors.org/) to maintain a list of all the people who have contributed to Cog.
+We welcome contributions from everyone, and consider all forms of contribution equally valuable. This includes code, bug reports, feature requests, and documentation. We use [All Contributors](https://allcontributors.org/) to maintain a list of all the people who have contributed to BoomX.
 
 To acknowledge a contribution, add a comment to an issue or pull request in the following format:
 
@@ -103,7 +103,7 @@ Once you have Go installed, run:
 
     make install PREFIX=$(go env GOPATH)
 
-This installs the `cog` binary to `$GOPATH/bin/cog`.
+This installs the `boomx` binary to `$GOPATH/bin/boomx`.
 
 To run the tests:
 
@@ -119,28 +119,28 @@ If you encounter any errors, see the troubleshooting section below?
 
 As much as possible, this is attempting to follow the [Standard Go Project Layout](https://github.com/golang-standards/project-layout).
 
-- `cmd/` - The root `cog` command.
+- `cmd/` - The root `boomx` command.
 - `pkg/cli/` - CLI commands.
-- `pkg/config` - Everything `cog.yaml` related.
+- `pkg/config` - Everything `boomx.yaml` related.
 - `pkg/docker/` - Low-level interface for Docker commands.
 - `pkg/dockerfile/` - Creates Dockerfiles.
-- `pkg/image/` - Creates and manipulates Cog Docker images.
+- `pkg/image/` - Creates and manipulates BoomX Docker images.
 - `pkg/predict/` - Runs predictions on models.
-- `pkg/util/` - Various packages that aren't part of Cog. They could reasonably be separate re-usable projects.
-- `python/` - The Cog Python library.
-- `test-integration/` - High-level integration tests for Cog.
+- `pkg/util/` - Various packages that aren't part of BoomX. They could reasonably be separate re-usable projects.
+- `python/` - The BoomX Python library.
+- `test-integration/` - High-level integration tests for BoomX.
 
 ## Concepts
 
-There are a few concepts used throughout Cog that might be helpful to understand.
+There are a few concepts used throughout BoomX that might be helpful to understand.
 
-- **Config**: The `cog.yaml` file.
-- **Image**: Represents a built Docker image that serves the Cog API, containing a **model**.
+- **Config**: The `boomx.yaml` file.
+- **Image**: Represents a built Docker image that serves the BoomX API, containing a **model**.
 - **Input**: Input from a **prediction**, as key/value JSON object.
 - **Model**: A user's machine learning model, consisting of code and weights.
 - **Output**: Output from a **prediction**, as arbitrarily complex JSON object.
 - **Prediction**: A single run of the model, that takes **input** and produces **output**.
-- **Predictor**: Defines how Cog runs **predictions** on a **model**.
+- **Predictor**: Defines how BoomX runs **predictions** on a **model**.
 
 ## Runnings tests
 
@@ -169,28 +169,28 @@ make install
 pip install -r requirements-dev.txt
 make test
 cd test-integration/test_integration/fixtures/file-project
-cog build
-docker run -p 5001:5000 --init --platform=linux/amd64 cog-file-project
+boomx build
+docker run -p 5001:5000 --init --platform=linux/amd64 boomx-file-project
 ```
 
 Then visit [localhost:5001](http://localhost:5001) in your browser.
 
 ## Publishing a release
 
-This project has a [GitHub Actions workflow](https://github.com/boomx/cog/blob/39cfc5c44ab81832886c9139ee130296f1585b28/.github/workflows/ci.yaml#L107) that uses [goreleaser](https://goreleaser.com/quick-start/#quick-start) to facilitate the process of publishing new releases. The release process is triggered by manually creating and pushing a new git tag.
+This project has a [GitHub Actions workflow](https://github.com/boomx/boomx/blob/39cfc5c44ab81832886c9139ee130296f1585b28/.github/workflows/ci.yaml#L107) that uses [goreleaser](https://goreleaser.com/quick-start/#quick-start) to facilitate the process of publishing new releases. The release process is triggered by manually creating and pushing a new git tag.
 
-To publish a new release, run the following in your local checkout of cog:
+To publish a new release, run the following in your local checkout of boomx:
 
     git checkout main
     git fetch --all --tags
     git tag v0.0.11
     git push --tags
 
-Then visit [github.com/boomx/cog/actions](https://github.com/boomx/cog/actions) to monitor the release process.
+Then visit [github.com/boomx/boomx/actions](https://github.com/boomx/boomx/actions) to monitor the release process.
 
 ### Publishing a prerelease
 
-Prereleases are a useful way to give testers a way to try out new versions of Cog without affecting the documented `latest` download URL which people normally use to install Cog.
+Prereleases are a useful way to give testers a way to try out new versions of BoomX without affecting the documented `latest` download URL which people normally use to install BoomX.
 
 To publish a prerelease version, append a [SemVer prerelease identifer](https://semver.org/#spec-item-9) like `-alpha` or `-beta` to the git tag name. Goreleaser will detect this and mark it as a prerelease in GitHub Releases.
 
@@ -201,12 +201,12 @@ To publish a prerelease version, append a [SemVer prerelease identifer](https://
 
 ## Troubleshooting
 
-### `cog command not found`
+### `boomx command not found`
 
-The compiled `cog` binary will be installed in `$GOPATH/bin/cog`, e.g. `~/go/bin/cog`. Make sure that Golang's bin directory is present on your system PATH by adding it to your shell config (`.bashrc`, `.zshrc`, etc):
+The compiled `boomx` binary will be installed in `$GOPATH/bin/boomx`, e.g. `~/go/bin/boomx`. Make sure that Golang's bin directory is present on your system PATH by adding it to your shell config (`.bashrc`, `.zshrc`, etc):
 
     export PATH=~/go/bin:$PATH
 
 ---
 
-Still having trouble? Please [open an issue](https://github.com/boomx/cog/issues) on GitHub.
+Still having trouble? Please [open an issue](https://github.com/boomx/boomx/issues) on GitHub.

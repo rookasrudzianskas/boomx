@@ -1,6 +1,6 @@
 # HTTP API
 
-When a Cog Docker image is run, it serves an HTTP API for making predictions. For more information, take a look at [the documentation for deploying models](deploy.md).
+When a BoomX Docker image is run, it serves an HTTP API for making predictions. For more information, take a look at [the documentation for deploying models](deploy.md).
 
 ## `GET /openapi.json`
 
@@ -74,17 +74,17 @@ started asynchronously is via webhooks. There is as yet no support for polling
 for prediction status.
 
 **Note 1:** that while this allows clients to create predictions
-"asynchronously," Cog can only run one prediction at a time, and it is currently
+"asynchronously," BoomX can only run one prediction at a time, and it is currently
 the caller's responsibility to make sure that earlier predictions are complete
 before new ones are created.
 
 **Note 2:** predictions created asynchronously use a different mechanism for
 file upload than those created using the synchronous API. You must specify an
-`--upload-url` when running the Cog server process. All uploads will be `PUT`
+`--upload-url` when running the BoomX server process. All uploads will be `PUT`
 using the provided `--upload-url` as a prefix, in much the same way that
 `output_file_prefix` worked. There is currently no single upload mechanism which
 works the same way for both synchronous and asynchronous prediction creation.
-This will be addressed in a future version of Cog.
+This will be addressed in a future version of BoomX.
 
 ### Webhooks
 
@@ -102,7 +102,7 @@ Prefer: respond-async
 }
 ```
 
-Cog will make requests to the URL supplied with the state of the prediction
+BoomX will make requests to the URL supplied with the state of the prediction
 object in the request body. Requests are made when specific events occur during
 the prediction, namely:
 
@@ -115,7 +115,7 @@ Requests for event types `output` and `logs` will be sent at most once every
 500ms. This interval is currently not configurable. Requests for event types
 `start` and `completed` will always be sent.
 
-By default, Cog will send requests for all event types. Clients can change which
+By default, BoomX will send requests for all event types. Clients can change which
 events trigger webhook requests by specifying `webhook_events_filter` in the
 prediction request. For example, if you only wanted requests to be sent at the
 start and end of the prediction, you would provide:
@@ -166,7 +166,7 @@ supplied prediction ID is unique. We recommend you use base32-encoded UUID4s
 (stripped of any padding characters) to ensure forward compatibility: these will
 be 26 ASCII characters long.
 
-**Note 2:** As noted earlier, Cog can only run one prediction at a time, and it is
+**Note 2:** As noted earlier, BoomX can only run one prediction at a time, and it is
 the caller's responsibility to make sure that earlier predictions are complete
 before new ones (with new IDs) are created.
 
@@ -198,4 +198,4 @@ POST /predictions/abcd1234/cancel HTTP/1.1
 
 Use of the cancelation API to cancel predictions started "synchronously" (i.e.
 without the `Prefer: respond-async` header) is currently not supported. This may
-change in a future release of Cog.
+change in a future release of BoomX.

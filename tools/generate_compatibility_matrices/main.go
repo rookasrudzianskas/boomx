@@ -12,8 +12,7 @@ import (
 
 	"github.com/anaskhan96/soup"
 
-	"github.com/boomx/cog/pkg/util/console"
-	"github.com/hashicorp/go-version"
+	"github.com/boomx/boomx/pkg/util/console"
 )
 
 func main() {

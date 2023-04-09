@@ -11,8 +11,8 @@ var (
 	Debug                 = false
 	ProfilingEnabled      = false
 	StartupTimeout        = 5 * time.Minute
-	ConfigFilename        = "cog.yaml"
+	ConfigFilename        = "boomx.yaml"
 	ReplicateRegistryHost = "r8.im"
 	ReplicateWebsiteHost  = "boomx.com"
-	LabelNamespace        = "run.cog."
+	LabelNamespace        = "run.boomx."
 )

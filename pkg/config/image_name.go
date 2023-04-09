@@ -8,7 +8,7 @@ import (
 
 // DockerImageName returns the default Docker image name for images
 func DockerImageName(projectDir string) string {
-	prefix := "cog-"
+	prefix := "boomx-"
 	projectName := strings.ToLower(path.Base(projectDir))
 
 	// Convert whitespace to dashes

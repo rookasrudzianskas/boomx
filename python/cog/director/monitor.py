@@ -28,7 +28,7 @@ class Monitor:
     def __init__(self, utilization_interval=15):
         self._thread = None
         self._should_exit = threading.Event()
-        self._tracer = trace.get_tracer("cog-director")
+        self._tracer = trace.get_tracer("boomx-director")
         self._prediction_events = Queue()
         self.utilization_interval = utilization_interval
 
@@ -73,7 +73,7 @@ class Monitor:
 
             if time.perf_counter() >= last_span_at + self.utilization_interval:
                 with self._tracer.start_as_current_span(
-                    name="cog.director.utilization",
+                    name="boomx.director.utilization",
                     attributes=span_attributes_from_env(),
                 ) as span:
                     if current_prediction_started_at:  # event didn't finish in window

@@ -18,45 +18,45 @@ MYPY := mypy
 default: all
 
 .PHONY: all
-all: cog
+all: boomx
 
-pkg/dockerfile/embed/cog.whl: python/* python/cog/* python/cog/server/* python/cog/command/*
+pkg/dockerfile/embed/boomx.whl: python/* python/boomx/* python/boomx/server/* python/boomx/command/*
 	@echo "Building Python library"
 	rm -rf python/dist
 	pip install build && $(PYTHON) -m build python/ --wheel
 	mkdir -p pkg/dockerfile/embed
 	cp python/dist/*.whl $@
 
-.PHONY: cog
-cog: pkg/dockerfile/embed/cog.whl
+.PHONY: boomx
+boomx: pkg/dockerfile/embed/boomx.whl
 	$(eval COG_VERSION ?= $(shell git describe --tags --match 'v*' --abbrev=0)+dev)
 	CGO_ENABLED=0 $(GO) build -o $@ \
-		-ldflags "-X github.com/boomx/cog/pkg/global.Version=$(COG_VERSION) -X github.com/boomx/cog/pkg/global.BuildTime=$(shell date +%Y-%m-%dT%H:%M:%S%z) -w" \
-		cmd/cog/cog.go
+		-ldflags "-X github.com/boomx/boomx/pkg/global.Version=$(COG_VERSION) -X github.com/boomx/boomx/pkg/global.BuildTime=$(shell date +%Y-%m-%dT%H:%M:%S%z) -w" \
+		cmd/boomx/boomx.go
 
 .PHONY: install
-install: cog
+install: boomx
 	$(INSTALL_PROGRAM) -d $(DESTDIR)$(BINDIR)
-	$(INSTALL_PROGRAM) cog $(DESTDIR)$(BINDIR)/cog
+	$(INSTALL_PROGRAM) boomx $(DESTDIR)$(BINDIR)/boomx
 
 .PHONY: uninstall
 uninstall:
-	rm -f $(DESTDIR)$(BINDIR)/cog
+	rm -f $(DESTDIR)$(BINDIR)/boomx
 
 .PHONY: clean
 clean:
 	$(GO) clean
 	rm -rf python/build python/dist
-	rm -f cog
-	rm -f pkg/dockerfile/embed/cog.whl
+	rm -f boomx
+	rm -f pkg/dockerfile/embed/boomx.whl
 
 .PHONY: test-go
-test-go: pkg/dockerfile/embed/cog.whl | check-fmt vet lint-go
+test-go: pkg/dockerfile/embed/boomx.whl | check-fmt vet lint-go
 	$(GO) get gotest.tools/gotestsum
 	$(GO) run gotest.tools/gotestsum -- -timeout 1200s -parallel 5 ./... $(ARGS)
 
 .PHONY: test-integration
-test-integration: cog
+test-integration: boomx
 	cd test-integration/ && $(MAKE) PATH="$(PWD):$(PATH)" test
 
 .PHONY: test-python
@@ -92,7 +92,7 @@ lint-go:
 
 .PHONY: lint-python
 lint-python:
-	$(MYPY) python/cog
+	$(MYPY) python/boomx
 
 .PHONY: lint
 lint: lint-go lint-python

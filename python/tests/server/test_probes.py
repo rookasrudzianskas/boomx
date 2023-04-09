@@ -4,7 +4,7 @@ import tempfile
 from unittest import mock
 
 import pytest
-from cog.server.probes import ProbeHelper
+from boomx.server.probes import ProbeHelper
 
 
 @pytest.fixture
@@ -52,4 +52,4 @@ def test_no_exception_when_probe_dir_exists(tmpdir, caplog):
     p = ProbeHelper(root=root)
     p.ready()
 
-    assert "Failed to create cog runtime state directory" in caplog.text
+    assert "Failed to create boomx runtime state directory" in caplog.text

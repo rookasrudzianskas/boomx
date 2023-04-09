@@ -13,12 +13,12 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/vincent-petithory/dataurl"
 
-	"github.com/boomx/cog/pkg/config"
-	"github.com/boomx/cog/pkg/docker"
-	"github.com/boomx/cog/pkg/image"
-	"github.com/boomx/cog/pkg/predict"
-	"github.com/boomx/cog/pkg/util/console"
-	"github.com/boomx/cog/pkg/util/mime"
+	"github.com/boomx/boomx/pkg/config"
+	"github.com/boomx/boomx/pkg/docker"
+	"github.com/boomx/boomx/pkg/image"
+	"github.com/boomx/boomx/pkg/predict"
+	"github.com/boomx/boomx/pkg/util/console"
+	"github.com/boomx/boomx/pkg/util/mime"
 )
 
 var (
@@ -33,7 +33,7 @@ func newPredictCommand() *cobra.Command {
 		Long: `Run a prediction.
 
 If 'image' is passed, it will run the prediction on that Docker image.
-It must be an image that has been built by Cog.
+It must be an image that has been built by BoomX.
 
 Otherwise, it will build the model in the current directory and run
 the prediction on that.`,

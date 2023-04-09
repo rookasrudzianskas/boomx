@@ -20,7 +20,7 @@ from .http import Server, create_app
 from .monitor import Monitor
 from .redis import RedisConsumer, RedisConsumerRotator
 
-log = structlog.get_logger("cog.director")
+log = structlog.get_logger("boomx.director")
 
 # Enable OpenTelemetry if the env vars are present. If this block isn't
 # run, all the opentelemetry calls are no-ops.

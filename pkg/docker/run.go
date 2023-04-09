@@ -12,7 +12,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/boomx/cog/pkg/util/console"
+	"github.com/boomx/boomx/pkg/util/console"
 )
 
 type Port struct {
@@ -51,7 +51,7 @@ func generateDockerArgs(options internalRunOptions) []string {
 		"run",
 		"--rm",
 		"--shm-size", "8G", // https://github.com/pytorch/pytorch/issues/2244
-		// TODO: relative to pwd and cog.yaml
+		// TODO: relative to pwd and boomx.yaml
 	}
 
 	if options.Detach {

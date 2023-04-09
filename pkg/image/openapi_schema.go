@@ -5,13 +5,13 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/boomx/cog/pkg/docker"
-	"github.com/boomx/cog/pkg/global"
-	"github.com/boomx/cog/pkg/util/console"
+	"github.com/boomx/boomx/pkg/docker"
+	"github.com/boomx/boomx/pkg/global"
+	"github.com/boomx/boomx/pkg/util/console"
 	"github.com/getkin/kin-openapi/openapi3"
 )
 
-// GenerateOpenAPISchema by running the image and executing Cog
+// GenerateOpenAPISchema by running the image and executing BoomX
 // This will be run as part of the build process then added as a label to the image. It can be retrieved more efficiently with the label by using GetOpenAPISchema
 func GenerateOpenAPISchema(imageName string, enableGPU bool) (*interface{}, error) {
 	var stdout bytes.Buffer
@@ -26,7 +26,7 @@ func GenerateOpenAPISchema(imageName string, enableGPU bool) (*interface{}, erro
 	err := docker.RunWithIO(docker.RunOptions{
 		Image: imageName,
 		Args: []string{
-			"python", "-m", "cog.command.openapi_schema",
+			"python", "-m", "boomx.command.openapi_schema",
 		},
 		GPUs: gpus,
 	}, nil, &stdout, &stderr)
@@ -65,7 +65,7 @@ func GetOpenAPISchema(imageName string) (*openapi3.T, error) {
 		schemaString = image.Config.Labels["org.cogmodel.openapi_schema"]
 	}
 	if schemaString == "" {
-		return nil, fmt.Errorf("Image %s does not appear to be a Cog model", imageName)
+		return nil, fmt.Errorf("Image %s does not appear to be a BoomX model", imageName)
 	}
 	return openapi3.NewLoader().LoadFromData([]byte(schemaString))
 }

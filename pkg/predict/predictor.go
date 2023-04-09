@@ -9,9 +9,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/boomx/cog/pkg/docker"
-	"github.com/boomx/cog/pkg/global"
-	"github.com/boomx/cog/pkg/util/console"
+	"github.com/boomx/boomx/pkg/docker"
+	"github.com/boomx/boomx/pkg/global"
+	"github.com/boomx/boomx/pkg/util/console"
 	"github.com/getkin/kin-openapi/openapi3"
 )
 
@@ -116,7 +116,7 @@ func (p *Predictor) waitForContainerReady() error {
 		if err := json.NewDecoder(resp.Body).Decode(healthcheck); err != nil {
 			return fmt.Errorf("Container healthcheck returned invalid response: %w", err)
 		}
-		// These status values are defined in python/cog/server/http.py
+		// These status values are defined in python/boomx/server/http.py
 		switch healthcheck.Status {
 		case "STARTING":
 			continue
@@ -209,17 +209,17 @@ func buildInputValidationErrorMessage(errorResponse *ValidationErrorResponse) er
 	}
 
 	return fmt.Errorf(
-		`The inputs you passed to cog predict could not be validated:
+		`The inputs you passed to boomx predict could not be validated:
 
 %s
 
 You can provide an input with -i. For example:
 
-    cog predict -i blur=3.5
+    boomx predict -i blur=3.5
 
-If your input is a local file, you need to prefix the path with @ to tell Cog to read the file contents. For example:
+If your input is a local file, you need to prefix the path with @ to tell BoomX to read the file contents. For example:
 
-    cog predict -i path=@image.jpg`,
+    boomx predict -i path=@image.jpg`,
 		strings.Join(errorMessages, "\n"),
 	)
 }

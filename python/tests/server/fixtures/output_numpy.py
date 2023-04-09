@@ -1,6 +1,6 @@
 import numpy as np
 
-from cog import BasePredictor
+from boomx import BasePredictor
 
 
 class Predictor(BasePredictor):

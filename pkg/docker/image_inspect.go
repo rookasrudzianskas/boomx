@@ -7,7 +7,7 @@ import (
 	"os/exec"
 	"strings"
 
-	"github.com/boomx/cog/pkg/util/console"
+	"github.com/boomx/boomx/pkg/util/console"
 	"github.com/docker/docker/api/types"
 )
 

@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema",
   "type": "object",
-  "title": "Schema for cog.yaml",
+  "title": "Schema for boomx.yaml",
   "description": "Defines how to build a Docker image and how to run predictions on your model inside that image.",
   "properties": {
     "build": {
@@ -12,12 +12,12 @@
         "cuda": {
           "$id": "#/properties/build/properties/cuda",
           "type": "string",
-          "description": "Cog automatically picks the correct version of CUDA to install, but this lets you override it for whatever reason."
+          "description": "BoomX automatically picks the correct version of CUDA to install, but this lets you override it for whatever reason."
         },
         "gpu": {
           "$id": "#/properties/build/properties/gpu",
           "type": "boolean",
-          "description": "Enable GPUs for this model. When enabled, the [nvidia-docker](https://github.com/NVIDIA/nvidia-docker) base image will be used, and Cog will automatically figure out what versions of CUDA and cuDNN to use based on the version of Python, PyTorch, and Tensorflow that you are using."
+          "description": "Enable GPUs for this model. When enabled, the [nvidia-docker](https://github.com/NVIDIA/nvidia-docker) base image will be used, and BoomX will automatically figure out what versions of CUDA and cuDNN to use based on the version of Python, PyTorch, and Tensorflow that you are using."
         },
         "python_version": {
           "$id": "#/properties/build/properties/python_version",

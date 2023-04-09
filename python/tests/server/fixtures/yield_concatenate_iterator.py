@@ -1,4 +1,4 @@
-from cog import BasePredictor, ConcatenateIterator
+from boomx import BasePredictor, ConcatenateIterator
 
 
 class Predictor(BasePredictor):

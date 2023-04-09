@@ -9,7 +9,7 @@ from attrs import define
 from fastapi.testclient import TestClient
 import pytest
 
-from cog.server.http import create_app
+from boomx.server.http import create_app
 
 
 @define

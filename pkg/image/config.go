@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/boomx/cog/pkg/config"
-	"github.com/boomx/cog/pkg/docker"
-	"github.com/boomx/cog/pkg/global"
+	"github.com/boomx/boomx/pkg/config"
+	"github.com/boomx/boomx/pkg/docker"
+	"github.com/boomx/boomx/pkg/global"
 )
 
 func GetConfig(imageName string) (*config.Config, error) {
@@ -20,7 +20,7 @@ func GetConfig(imageName string) (*config.Config, error) {
 		configString = image.Config.Labels["org.cogmodel.config"]
 	}
 	if configString == "" {
-		return nil, fmt.Errorf("Image %s does not appear to be a Cog model", imageName)
+		return nil, fmt.Errorf("Image %s does not appear to be a BoomX model", imageName)
 	}
 	conf := new(config.Config)
 	if err := json.Unmarshal([]byte(configString), conf); err != nil {

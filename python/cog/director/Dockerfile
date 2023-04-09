@@ -13,8 +13,8 @@ chmod +x /sbin/tini
 ENTRYPOINT ["/sbin/tini", "--"]
 
 ARG cog_version
-RUN pip install cog==${cog_version}
+RUN pip install boomx==${cog_version}
 
 WORKDIR /src
 EXPOSE 4900
-CMD ["python", "-m", "cog.director"]
+CMD ["python", "-m", "boomx.director"]

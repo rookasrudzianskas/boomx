@@ -29,7 +29,7 @@ func TestGetProjectDirWithFlagSet(t *testing.T) {
 func TestGetConfigShouldLoadFromCustomDir(t *testing.T) {
 	dir := t.TempDir()
 
-	err := os.WriteFile(path.Join(dir, "cog.yaml"), []byte(testConfig), 0o644)
+	err := os.WriteFile(path.Join(dir, "boomx.yaml"), []byte(testConfig), 0o644)
 	require.NoError(t, err)
 	err = os.WriteFile(path.Join(dir, "requirements.txt"), []byte("torch==1.0.0"), 0o644)
 	require.NoError(t, err)
@@ -42,7 +42,7 @@ func TestGetConfigShouldLoadFromCustomDir(t *testing.T) {
 func TestFindProjectRootDirShouldFindParentDir(t *testing.T) {
 	projectDir := t.TempDir()
 
-	err := os.WriteFile(path.Join(projectDir, "cog.yaml"), []byte(testConfig), 0o644)
+	err := os.WriteFile(path.Join(projectDir, "boomx.yaml"), []byte(testConfig), 0o644)
 	require.NoError(t, err)
 
 	subdir := path.Join(projectDir, "some/sub/dir")

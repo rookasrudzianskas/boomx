@@ -1,4 +1,4 @@
-module github.com/boomx/cog
+module github.com/boomx/boomx
 
 go 1.19
 

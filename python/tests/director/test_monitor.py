@@ -6,8 +6,8 @@ import pytest
 from opentelemetry import trace
 from opentelemetry.sdk.trace import TracerProvider
 
-from cog.director.monitor import Monitor
-from cog.schema import PredictionResponse
+from boomx.director.monitor import Monitor
+from boomx.schema import PredictionResponse
 
 
 class MockSpanProvider:
@@ -62,7 +62,7 @@ def test_emit_utilization_span():
 
     spans = wait_for_num_spans(span_provider, 4)
 
-    assert spans[0].name == "cog.director.utilization"
+    assert spans[0].name == "boomx.director.utilization"
     # Either 0.0 or 1.0, depending on whether thread gets to emit span before or
     # after `set_current_prediction` runs in the main thread
     assert "utilization" in spans[0].attributes

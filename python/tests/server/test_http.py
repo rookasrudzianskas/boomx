@@ -34,7 +34,7 @@ def test_openapi_specification(client):
 
     schema = resp.json()
     assert schema["openapi"] == "3.0.2"
-    assert schema["info"] == {"title": "Cog", "version": "0.1.0"}
+    assert schema["info"] == {"title": "BoomX", "version": "0.1.0"}
     assert schema["paths"]["/"] == {
         "get": {
             "summary": "Root",
@@ -252,7 +252,7 @@ def test_openapi_specification_with_yield(client):
         "items": {
             "type": "string",
         },
-        "x-cog-array-type": "iterator",
+        "x-boomx-array-type": "iterator",
     }
 
 
@@ -267,8 +267,8 @@ def test_openapi_specification_with_yield(client):
         "items": {
             "type": "string",
         },
-        "x-cog-array-type": "iterator",
-        "x-cog-array-display": "concatenate",
+        "x-boomx-array-type": "iterator",
+        "x-boomx-array-display": "concatenate",
     }
 
 

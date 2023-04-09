@@ -14,9 +14,9 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/boomx/cog/pkg/docker"
-	"github.com/boomx/cog/pkg/global"
-	"github.com/boomx/cog/pkg/util/console"
+	"github.com/boomx/boomx/pkg/docker"
+	"github.com/boomx/boomx/pkg/global"
+	"github.com/boomx/boomx/pkg/util/console"
 )
 
 type VerifyResponse struct {
@@ -93,7 +93,7 @@ func readTokenInteractively(registryHost string) (string, error) {
 	console.Infof("This command will authenticate Docker with BoomX's '%s' Docker registry. You will need a BoomX account.", registryHost)
 	console.Info("")
 
-	// TODO(bfirsh): if you have defined a registry in cog.yaml that is not r8.im, suggest to use 'docker login'
+	// TODO(bfirsh): if you have defined a registry in boomx.yaml that is not r8.im, suggest to use 'docker login'
 
 	console.Info("Hit enter to get started. A browser will open with an authentication token that you need to paste here.")
 	if _, err := bufio.NewReader(os.Stdin).ReadString('\n'); err != nil {
@@ -114,7 +114,7 @@ func readTokenInteractively(registryHost string) (string, error) {
 }
 
 func getDisplayTokenURL(registryHost string) (string, error) {
-	resp, err := http.Get(addressWithScheme(registryHost) + "/cog/v1/display-token-url")
+	resp, err := http.Get(addressWithScheme(registryHost) + "/boomx/v1/display-token-url")
 	if err != nil {
 		return "", fmt.Errorf("Failed to log in to %s: %w", registryHost, err)
 	}
@@ -152,7 +152,7 @@ func maybeOpenBrowser(url string) {
 }
 
 func verifyToken(registryHost string, token string) (username string, err error) {
-	resp, err := http.PostForm(addressWithScheme(registryHost)+"/cog/v1/verify-token", url.Values{
+	resp, err := http.PostForm(addressWithScheme(registryHost)+"/boomx/v1/verify-token", url.Values{
 		"token": []string{token},
 	})
 	if err != nil {

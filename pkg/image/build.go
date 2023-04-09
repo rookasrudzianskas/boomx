@@ -5,18 +5,18 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/boomx/cog/pkg/config"
-	"github.com/boomx/cog/pkg/docker"
-	"github.com/boomx/cog/pkg/dockerfile"
-	"github.com/boomx/cog/pkg/global"
-	"github.com/boomx/cog/pkg/util/console"
+	"github.com/boomx/boomx/pkg/config"
+	"github.com/boomx/boomx/pkg/docker"
+	"github.com/boomx/boomx/pkg/dockerfile"
+	"github.com/boomx/boomx/pkg/global"
+	"github.com/boomx/boomx/pkg/util/console"
 )
 
-// Build a Cog model from a config
+// Build a BoomX model from a config
 //
 // This is separated out from docker.Build(), so that can be as close as possible to the behavior of 'docker build'.
 func Build(cfg *config.Config, dir, imageName string, progressOutput string) error {
-	console.Infof("Building Docker image from environment in cog.yaml as %s...", imageName)
+	console.Infof("Building Docker image from environment in boomx.yaml as %s...", imageName)
 
 	generator, err := dockerfile.NewGenerator(cfg, dir)
 	if err != nil {
@@ -56,7 +56,7 @@ func Build(cfg *config.Config, dir, imageName string, progressOutput string) err
 		// to decide how/if to shim the image.
 		global.LabelNamespace + "has_init": "true",
 		// Backwards compatibility. Remove for 1.0.
-		"org.cogmodel.deprecated":  "The org.cogmodel labels are deprecated. Use run.cog.",
+		"org.cogmodel.deprecated":  "The org.cogmodel labels are deprecated. Use run.boomx.",
 		"org.cogmodel.cog_version": global.Version,
 		"org.cogmodel.config":      string(bytes.TrimSpace(configJSON)),
 	}
@@ -79,10 +79,10 @@ func Build(cfg *config.Config, dir, imageName string, progressOutput string) err
 
 func BuildBase(cfg *config.Config, dir string, progressOutput string) (string, error) {
 	// TODO: better image management so we don't eat up disk space
-	// https://github.com/boomx/cog/issues/80
+	// https://github.com/boomx/boomx/issues/80
 	imageName := config.BaseDockerImageName(dir)
 
-	console.Info("Building Docker image from environment in cog.yaml...")
+	console.Info("Building Docker image from environment in boomx.yaml...")
 	generator, err := dockerfile.NewGenerator(cfg, dir)
 	if err != nil {
 		return "", fmt.Errorf("Error creating Dockerfile generator: %w", err)

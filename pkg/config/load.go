@@ -6,9 +6,9 @@ import (
 	"path"
 	"path/filepath"
 
-	"github.com/boomx/cog/pkg/errors"
-	"github.com/boomx/cog/pkg/global"
-	"github.com/boomx/cog/pkg/util/files"
+	"github.com/boomx/boomx/pkg/errors"
+	"github.com/boomx/boomx/pkg/global"
+	"github.com/boomx/boomx/pkg/util/files"
 )
 
 const maxSearchDepth = 100
@@ -72,7 +72,7 @@ func loadConfigFromFile(file string) (*Config, error) {
 
 }
 
-// Given a directory, find the cog config file in that directory
+// Given a directory, find the boomx config file in that directory
 func findConfigPathInDirectory(dir string) (configPath string, err error) {
 	filePath := path.Join(dir, global.ConfigFilename)
 	exists, err := files.Exists(filePath)
@@ -86,7 +86,7 @@ func findConfigPathInDirectory(dir string) (configPath string, err error) {
 }
 
 // Walk up the directory tree to find the root of the project.
-// The project root is defined as the directory housing a `cog.yaml` file.
+// The project root is defined as the directory housing a `boomx.yaml` file.
 func findProjectRootDir(startDir string) (string, error) {
 	dir := startDir
 	for i := 0; i < maxSearchDepth; i++ {
@@ -102,5 +102,5 @@ func findProjectRootDir(startDir string) (string, error) {
 		dir = filepath.Dir(dir)
 	}
 
-	return "", errors.ConfigNotFound("No cog.yaml found in parent directories.")
+	return "", errors.ConfigNotFound("No boomx.yaml found in parent directories.")
 }

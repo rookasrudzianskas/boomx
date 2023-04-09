@@ -1,5 +1,5 @@
 import sys
-from cog import BasePredictor
+from boomx import BasePredictor
 
 
 class Predictor(BasePredictor):

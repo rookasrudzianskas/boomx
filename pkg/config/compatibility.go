@@ -8,10 +8,10 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/boomx/cog/pkg/util"
-	"github.com/boomx/cog/pkg/util/console"
+	"github.com/boomx/boomx/pkg/util"
+	"github.com/boomx/boomx/pkg/util/console"
 
-	"github.com/boomx/cog/pkg/util/version"
+	"github.com/boomx/boomx/pkg/util/version"
 )
 
 // TODO(andreas): check tf/py versions. tf 1.5.0 didn't install on py 3.8
@@ -204,7 +204,7 @@ func latestCuDNNForCUDA(cuda string) (string, error) {
 	})
 	if len(cuDNNs) == 0 {
 		// TODO: return a list of supported cuda versions
-		return "", fmt.Errorf("CUDA %s is not supported by Cog", cuda)
+		return "", fmt.Errorf("CUDA %s is not supported by BoomX", cuda)
 	}
 	return cuDNNs[0], nil
 }
@@ -352,7 +352,7 @@ func torchvisionGPUPackage(ver, cuda string) (name, cpuVersion, findLinks, extra
 	}
 	if latest == nil {
 		// TODO: can we suggest a CUDA version known to be compatible?
-		console.Warnf("Cog doesn't know if CUDA %s is compatible with torchvision %s. This might cause CUDA problems.", cuda, ver)
+		console.Warnf("BoomX doesn't know if CUDA %s is compatible with torchvision %s. This might cause CUDA problems.", cuda, ver)
 		return "torchvision", ver, "", "", nil
 	}
 

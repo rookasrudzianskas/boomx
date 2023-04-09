@@ -2,8 +2,8 @@ before:
   hooks:
     - go mod tidy
 builds:
-  - binary: cog
-    id: cog
+  - binary: boomx
+    id: boomx
     env:
       - CGO_ENABLED=0
     goos:
@@ -12,9 +12,9 @@ builds:
     goarch:
       - amd64
       - arm64
-    main: ./cmd/cog/cog.go
+    main: ./cmd/boomx/boomx.go
     ldflags:
-      - "-s -w -X github.com/boomx/cog/pkg/global.Version={{.Version}} -X github.com/boomx/cog/pkg/global.Commit={{.Commit}} -X github.com/boomx/cog/pkg/global.BuildTime={{.Date}}"
+      - "-s -w -X github.com/boomx/boomx/pkg/global.Version={{.Version}} -X github.com/boomx/boomx/pkg/global.Commit={{.Commit}} -X github.com/boomx/boomx/pkg/global.BuildTime={{.Date}}"
 archives:
   - format: binary
     name_template: "{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}"

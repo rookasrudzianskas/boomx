@@ -20,7 +20,7 @@ func TestPythonPackagesAndRequirementsCantBeUsedTogether(t *testing.T) {
 	}
 	err := config.ValidateAndComplete("")
 	require.Error(t, err)
-	require.Contains(t, err.Error(), "Only one of python_packages or python_requirements can be set in your cog.yaml, not both")
+	require.Contains(t, err.Error(), "Only one of python_packages or python_requirements can be set in your boomx.yaml, not both")
 }
 
 func TestPythonRequirementsResolvesPythonPackagesAndCudaVersions(t *testing.T) {
@@ -190,7 +190,7 @@ func TestValidateAndCompleteCUDAForAllTorch(t *testing.T) {
 }
 
 func TestUnsupportedTorch(t *testing.T) {
-	// Ensure version is not known by Cog
+	// Ensure version is not known by BoomX
 	cudas, err := cudasFromTorch("0.4.1")
 	require.NoError(t, err)
 	require.Empty(t, cudas)
@@ -207,7 +207,7 @@ func TestUnsupportedTorch(t *testing.T) {
 	}
 	err = config.ValidateAndComplete("")
 	require.Error(t, err)
-	require.Contains(t, err.Error(), "Cog doesn't know what CUDA version is compatible with torch==0.4.1.")
+	require.Contains(t, err.Error(), "BoomX doesn't know what CUDA version is compatible with torch==0.4.1.")
 
 	config = &Config{
 		Build: &Build{
@@ -227,7 +227,7 @@ func TestUnsupportedTorch(t *testing.T) {
 }
 
 func TestUnsupportedTensorflow(t *testing.T) {
-	// Ensure version is not known by Cog
+	// Ensure version is not known by BoomX
 	cuda, cudnn, err := cudaFromTF("0.4.1")
 	require.NoError(t, err)
 	require.Equal(t, cuda, "")
@@ -245,7 +245,7 @@ func TestUnsupportedTensorflow(t *testing.T) {
 	}
 	err = config.ValidateAndComplete("")
 	require.Error(t, err)
-	require.Contains(t, err.Error(), "Cog doesn't know what CUDA version is compatible with tensorflow==0.4.1.")
+	require.Contains(t, err.Error(), "BoomX doesn't know what CUDA version is compatible with tensorflow==0.4.1.")
 
 	config = &Config{
 		Build: &Build{

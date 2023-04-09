@@ -218,8 +218,8 @@ class ConcatenateIterator(Iterator[Item]):
             {
                 "type": "array",
                 "items": {"type": "string"},
-                "x-cog-array-type": "iterator",
-                "x-cog-array-display": "concatenate",
+                "x-boomx-array-type": "iterator",
+                "x-boomx-array-display": "concatenate",
             }
         )
 

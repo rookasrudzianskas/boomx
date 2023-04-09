@@ -3,7 +3,7 @@ import logging
 import sys
 import time
 
-from cog import BasePredictor
+from boomx import BasePredictor
 
 libc = ctypes.CDLL(None)
 

@@ -2,8 +2,8 @@ from unittest import mock
 
 import pytest
 
-from cog.director.prediction_tracker import PredictionTracker, PredictionMismatchError
-from cog.schema import PredictionResponse
+from boomx.director.prediction_tracker import PredictionTracker, PredictionMismatchError
+from boomx.schema import PredictionResponse
 
 
 class NotNoneMatcher:
