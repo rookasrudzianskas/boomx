@@ -1,0 +1,41 @@
+before:
+  hooks:
+    - go mod tidy
+builds:
+  - binary: cog
+    id: cog
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - darwin
+      - linux
+    goarch:
+      - amd64
+      - arm64
+    main: ./cmd/cog/cog.go
+    ldflags:
+      - "-s -w -X github.com/boomx/cog/pkg/global.Version={{.Version}} -X github.com/boomx/cog/pkg/global.Commit={{.Commit}} -X github.com/boomx/cog/pkg/global.BuildTime={{.Date}}"
+archives:
+  - format: binary
+    name_template: "{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}"
+    replacements:
+      darwin: Darwin
+      linux: Linux
+      386: i386
+      amd64: x86_64
+checksum:
+  name_template: "checksums.txt"
+snapshot:
+  name_template: "{{ .Tag }}-next"
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
+release:
+  # If set to auto, will mark the release as not ready for production
+  # in case there is an indicator for this in the tag e.g. v1.0.0-alpha
+  # If set to true, will mark the release as not ready for production.
+  # Default is false.
+  prerelease: auto

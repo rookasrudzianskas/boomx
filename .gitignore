@@ -1,0 +1,15 @@
+/cog
+.ipynb_checkpoints/
+Untitled*.ipynb
+__pycache__
+.cog
+.hypothesis/
+dist
+*.egg-info
+pkg/dockerfile/embed/cog.whl
+python/build
+# Used by a vim plugin (projectionist)
+.projections.json
+.venv/
+.idea/
+.DS_Store
