@@ -6,5 +6,3 @@ production-ready container.
 # Process
 
 
-
-
